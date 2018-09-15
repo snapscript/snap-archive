@@ -1,0 +1,42 @@
+# |  represents a logical "or"
+# *  represents one or more
+# +  represents at least once
+# ?  represents one or none
+# <> define a production
+# () groups productions
+# {} group productions, first match wins
+# _  represents whitespace
+# [] represents a symbol
+# '' represents a literal text value
+
+sign = {'-' | '+'};
+number = ?<sign>{[hexidecimal] | [binary] | [decimal]};
+boolean = {'true' | 'false'};
+null = 'null';
+literal = {<null> | <boolean> | <number> | [template] | [text]};
+
+property = [identifier] _ 'as' _ [type] ';';
+type-definition = 'type' _ [type] '{' +<property> '}'; 
+
+conditional-operator = 'or'| 'and';
+relational-operator = {'<='|'>='|'<'|'>'|'=='|'!='|'in'|'!in'};
+
+list = '[' [text] *( ',' [text] ) ']';
+
+attribute = { <literal> | [identifier] ?('.'[identifier])};
+action = <attribute>;
+resource = <attribute>;
+permission = <action> _ 'on' _ <resource>;
+
+condition = <attribute> ?_ <relational-operator> ?_ {<list>|<attribute>};
+condition-operand = {<condition-group> | <condition>};
+condition-group = '(' <condition-list> ')';
+condition-list = <condition-operand> ?_ *(<conditional-operator> ?_ <condition-operand>);
+
+where-clause = 'where' _ <condition-list>;
+
+allow-statement = 'allow' _ <permission> _ <where-clause>';';
+role-statement = 'role' _ [type] '{' +<allow-statement> '}';
+policy-statement = 'policy' _ [type] '{' +<role-statement> '}';
+policy = +{<policy-statement> | <type-definition>};
+

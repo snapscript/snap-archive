@@ -1,0 +1,13 @@
+decimal = org.snapscript.tree.literal.NumberLiteral
+hexidecimal = org.snapscript.tree.literal.NumberLiteral
+binary = org.snapscript.tree.literal.NumberLiteral
+boolean = org.snapscript.tree.literal.BooleanLiteral
+identifier = org.snapscript.tree.literal.TextLiteral
+template = org.snapscript.tree.template.TextTemplate
+constructor = org.snapscript.tree.literal.TextLiteral
+class = org.snapscript.tree.literal.TextLiteral
+module = org.snapscript.tree.literal.TextLiteral
+type = org.snapscript.tree.literal.TextLiteral
+text = org.snapscript.tree.literal.TextLiteral
+null = org.snapscript.tree.literal.NullLiteral
+number = org.snapscript.tree.operation.SignedNumber

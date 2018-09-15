@@ -1,0 +1,50 @@
+
+
+type User {
+   countryOfDomicile: String;
+   name: String
+
+
+   type Address {
+   }  
+}
+
+type Group {
+}
+
+
+
+group RestrictedCountries is group where group.country
+
+
+declare PressReader as role where 
+         user.countryOfDomicile not in RestrictedCountries
+      and 
+         user.disipline in BusinessDiscipline
+
+
+
+type Action;
+
+type User {
+   name as String;
+   domicileCountry as String;
+   email as String;
+   age as Integer;
+}
+
+type Group {
+   name as String;
+}
+      
+   
+
+allow View_Content_Document read permission on "content.document" where user.discipline in 
+      ("ecomomicsDiscipline", "commoditiesDisipline", "creditStrategy")
+
+allow View_Content_Document read permission on "content.document" where user.discipline in 
+      ("ecomomicsDiscipline", "commoditiesDisipline", "creditStrategy")
+
+allow View_Content_Document read permission on "content.document" where user.discipline in 
+      ("ecomomicsDiscipline", "commoditiesDisipline", "creditStrategy")
+

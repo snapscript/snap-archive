@@ -1,0 +1,34 @@
+
+
+type User {
+	name as String;
+	countryOfOrigin as Country;
+}
+
+type Country {
+	name as String;
+	locale as Locale;
+}
+
+policy SearchResults {
+
+	/*
+	 * Press reader role which is valid when the user is not in N. Korea.
+	 */
+
+	role PressReader {
+	
+		allow Action.READ on Resource.CONTENT 
+				where 
+					discipline in ['x'] 
+				and 
+					country !in ['north korea']
+				and
+					(age > 18 and age < 90);		
+		
+		
+		allow Action.READ on Resource.CONTENT where discipline in ['x'] and country !in ['north korea'];
+		allow Action.READ on Resource.CONTENT where discipline in ['x'] and country !in ['north korea'];
+	
+	}
+}
