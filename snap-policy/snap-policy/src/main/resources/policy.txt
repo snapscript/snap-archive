@@ -10,6 +10,16 @@ type Country {
 	locale as Locale;
 }
 
+enum Action {
+ 	READ,
+ 	WRITE,
+	SEARCH
+}
+
+enum Resource {
+ 	CONTENT
+}
+
 policy SearchResults {
 
 	/*

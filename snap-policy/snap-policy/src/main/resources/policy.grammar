@@ -15,8 +15,11 @@ boolean = {'true' | 'false'};
 null = 'null';
 literal = {<null> | <boolean> | <number> | [template] | [text]};
 
-property = [identifier] _ 'as' _ [type] ';';
-type-definition = 'type' _ [type] '{' +<property> '}'; 
+type-property = [identifier] _ 'as' _ [type] ';';
+type-definition = 'type' _ [type] '{' +<type-property> '}'; 
+
+enum-property = [type];
+enum-definition = 'enum' _ [type] '{' <enum-property> *(',' <enum-property>) '}'; 
 
 conditional-operator = 'or'| 'and';
 relational-operator = {'<='|'>='|'<'|'>'|'=='|'!='|'in'|'!in'};
@@ -38,5 +41,5 @@ where-clause = 'where' _ <condition-list>;
 allow-statement = 'allow' _ <permission> _ <where-clause>';';
 role-statement = 'role' _ [type] '{' +<allow-statement> '}';
 policy-statement = 'policy' _ [type] '{' +<role-statement> '}';
-policy = +{<policy-statement> | <type-definition>};
+policy = +{<policy-statement> | <type-definition> | <enum-definition> };
 
