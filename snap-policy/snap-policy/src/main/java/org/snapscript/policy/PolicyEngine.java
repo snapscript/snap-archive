@@ -61,6 +61,6 @@ public interface PolicyEngine {
    }
    
    public static void main(String[] args) throws Exception {
-      PolicyEngine.execute(new File("C:\\Work\\development\\snapscript\\snap-archive\\snap-policy\\snap-policy\\src\\main\\resources\\policy.txt"));
+      PolicyEngine.execute(new File("C:\\Work\\development\\snapscript\\snap-develop\\snap-studio\\work\\demo\\misc\\assets\\test.policy"));
    }
 }
