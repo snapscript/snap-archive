@@ -1,0 +1,9 @@
+server:
+  directory: c:/temp
+  port: 7878
+  packages: io.orthrus.directory   
+   
+
+logging:
+  level:
+    root: INFO        
