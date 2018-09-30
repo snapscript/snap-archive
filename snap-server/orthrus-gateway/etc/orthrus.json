@@ -91,7 +91,7 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/",
+            "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
               "http://localhost:7070/",
@@ -106,7 +106,7 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/",
+            "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
               "http://localhost:3334/",
@@ -121,7 +121,7 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/",
+            "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
               "http://localhost:8383/",
@@ -150,7 +150,7 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/",
+            "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
               "http://localhost:4321/",

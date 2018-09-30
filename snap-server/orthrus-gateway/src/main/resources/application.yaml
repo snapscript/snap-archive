@@ -1,7 +1,7 @@
 server:
   directory: c:/temp
   port: 7979
-  packages: io.orthrus.sso   
+  packages: io.orthrus.gateway   
       
 gateway:   
   domain: www.orthrus.io
