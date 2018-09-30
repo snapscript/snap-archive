@@ -10,12 +10,12 @@
     <arg value="install" />
     <arg value="-DskipTests" />
   </exec>
-  <mkdir dir="build/${build.version}/libs" />
+  <mkdir dir="build/${build.version}/lib" />
   <mkdir dir="build/${build.version}/etc" />
   <mkdir dir="build/${build.version}/certificate/www.orthrus.io" />
   <mkdir dir="build/${build.version}/bin" />
   <mkdir dir="build/${build.version}/log" />
-  <copy file="target/gateway.jar" tofile="build/${build.version}/libs/gateway.jar" overwrite="true" />
+  <copy file="target/gateway.jar" tofile="build/${build.version}/lib/gateway.jar" overwrite="true" />
   <copy file="certificate/www.orthrus.io/www.orthrus.io.pfx" tofile="build/${build.version}/certificate/www.orthrus.io/www.orthrus.io.pfx" overwrite="true" />
   <copy file="bin/start.sh" tofile="build/${build.version}/bin/start.sh" overwrite="true" />
   <copy file="etc/application-prod.yaml" tofile="build/${build.version}/etc/application-prod.yaml" overwrite="true" />
