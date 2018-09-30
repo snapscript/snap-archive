@@ -128,7 +128,28 @@
               "http://localhost:8383/"
             ]
           }
-        },        
+        },   
+        {
+          "route-patterns": [
+            "http.*://orthrus.io/admin/.*",
+            "http.*://www.orthrus.io/admin/.*"
+          ],
+          "route-rules": [
+            {
+              "pattern": "/admin/(.*)",
+              "template": "/%{1}"
+            }
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "ping-path": "/",
+            "ping-frequency": 5000,
+            "servers": [
+              "http://localhost:7979/",
+              "http://localhost:7979/"
+            ]
+          }
+        },     
         {
           "route-patterns": [
             "http.*://orthrus.io/.*",

@@ -33,10 +33,18 @@ public class StatusResource {
    }
    
    @GET
+   @Path("/error")
+   @Produces(MediaType.APPLICATION_JSON)
+   @ApiOperation(value = "Full status details")
+   public List<StatusResult> statusError() {
+      return service.statusError();
+   }
+   
+   @GET
    @Path("/full")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Full status details")
-   public List<StatusResult> fullStatus() {
+   public List<StatusResult> statusFull() {
       return service.statusFull();
    }
 

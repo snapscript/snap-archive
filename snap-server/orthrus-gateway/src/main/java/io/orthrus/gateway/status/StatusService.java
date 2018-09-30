@@ -44,6 +44,31 @@ public class StatusService {
    }
    
    @SneakyThrows
+   public List<StatusResult> statusError() {
+      List<StatusResult> results = Lists.newArrayList();
+      Set<ProxyEndPoint> servers = plan.getServers();
+      
+      for(ProxyEndPoint entry : servers) {
+         StatusMonitor monitor = entry.getMonitor();
+         StatusReport report = monitor.checkStatus();
+         State state = report.getState();
+         
+         if(state != State.SERVICE_AVAILABLE) {
+            List<String> patterns = entry.getPatterns();
+            String address = "" +entry.getAddress();
+            StatusResult result = StatusResult.builder()
+                  .state(state)
+                  .address(address)
+                  .patterns(patterns)
+                  .build();
+            
+            results.add(result);
+         }
+      }
+      return results;
+   }
+   
+   @SneakyThrows
    public List<StatusResult> statusFull() {
       List<StatusResult> results = Lists.newArrayList();
       Set<ProxyEndPoint> servers = plan.getServers();
