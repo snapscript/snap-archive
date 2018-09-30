@@ -20,4 +20,5 @@
   <copy file="etc/application-prod.yaml" tofile="build/etc/application-prod.yaml" overwrite="true" />
   <copy file="etc/logback.xml" tofile="build/etc/logback.xml" overwrite="true" />
   <copy file="etc/orthrus.json" tofile="build/etc/orthrus.json" overwrite="true" />
+  <zip destfile="gateway.zip" basedir="build"/>
 </project>
