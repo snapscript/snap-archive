@@ -19,7 +19,7 @@
   </properties>
 
   <dependencies>
-      <dependency>
+    <dependency>
       <groupId>io.orthrus</groupId>
       <artifactId>orthrus-common</artifactId>
       <version>sandbox-SNAPSHOT</version>

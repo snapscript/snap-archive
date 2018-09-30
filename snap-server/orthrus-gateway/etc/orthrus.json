@@ -94,8 +94,8 @@
             "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
-              "http://localhost:7070/",
-              "http://localhost:7070/"
+              "http://prodapp1:7070/",
+              "http://prodapp2:7070/"
             ]
           }
         },
@@ -109,8 +109,8 @@
             "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
-              "http://localhost:3334/",
-              "http://localhost:3334/"
+              "http://prodapp1:3334/",
+              "http://prodapp2:3334/"
             ]
           }
         },        
@@ -124,8 +124,8 @@
             "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
-              "http://localhost:8383/",
-              "http://localhost:8383/"
+              "http://prodapp1:8383/",
+              "http://prodapp2:8383/"
             ]
           }
         },   
@@ -145,8 +145,8 @@
             "ping-path": "/",
             "ping-frequency": 5000,
             "servers": [
-              "http://localhost:7979/",
-              "http://localhost:7979/"
+              "http://prodapp1:7979/",
+              "http://prodapp2:7979/"
             ]
           }
         },     
@@ -174,8 +174,8 @@
             "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
-              "http://localhost:4321/",
-              "http://localhost:4321/"
+              "http://prodapp1:4321/",
+              "http://prodapp2:4321/"
             ]
           }
         }

@@ -1,0 +1,14 @@
+server:
+  directory: /apps/rp/current
+  port: 7979
+  packages: io.orthrus.gateway   
+      
+gateway:   
+  domain: www.orthrus.io
+  plan: /apps/rp/current/etc/orthrus.json   
+  resources: /apps/rp/current/error   
+
+logging:
+  level:
+    root: INFO        
+
