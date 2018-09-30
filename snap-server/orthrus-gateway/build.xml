@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <property file="build.properties" />
+  <echo message="${build.version}" />
   <echo message="${maven.home}" />
   <echo message="${java.home}" />
   <echo message="${ant.home}" />
@@ -9,16 +10,16 @@
     <arg value="install" />
     <arg value="-DskipTests" />
   </exec>
-  <mkdir dir="build/libs" />
-  <mkdir dir="build/etc" />
-  <mkdir dir="build/certificate/www.orthrus.io" />
-  <mkdir dir="build/bin" />
-  <mkdir dir="build/log" />
-  <copy file="target/gateway.jar" tofile="build/libs/gateway.jar" overwrite="true" />
-  <copy file="certificate/www.orthrus.io/www.orthrus.io.pfx" tofile="build/certificate/www.orthrus.io/www.orthrus.io.pfx" overwrite="true" />
-  <copy file="bin/start.sh" tofile="build/bin/start.sh" overwrite="true" />
-  <copy file="etc/application-prod.yaml" tofile="build/etc/application-prod.yaml" overwrite="true" />
-  <copy file="etc/logback.xml" tofile="build/etc/logback.xml" overwrite="true" />
-  <copy file="etc/orthrus.json" tofile="build/etc/orthrus.json" overwrite="true" />
+  <mkdir dir="build/${build.version}/libs" />
+  <mkdir dir="build/${build.version}/etc" />
+  <mkdir dir="build/${build.version}/certificate/www.orthrus.io" />
+  <mkdir dir="build/${build.version}/bin" />
+  <mkdir dir="build/${build.version}/log" />
+  <copy file="target/gateway.jar" tofile="build/${build.version}/libs/gateway.jar" overwrite="true" />
+  <copy file="certificate/www.orthrus.io/www.orthrus.io.pfx" tofile="build/${build.version}/certificate/www.orthrus.io/www.orthrus.io.pfx" overwrite="true" />
+  <copy file="bin/start.sh" tofile="build/${build.version}/bin/start.sh" overwrite="true" />
+  <copy file="etc/application-prod.yaml" tofile="build/${build.version}/etc/application-prod.yaml" overwrite="true" />
+  <copy file="etc/logback.xml" tofile="build/${build.version}/etc/logback.xml" overwrite="true" />
+  <copy file="etc/orthrus.json" tofile="build/${build.version}/etc/orthrus.json" overwrite="true" />
   <zip destfile="gateway.zip" basedir="build"/>
 </project>
