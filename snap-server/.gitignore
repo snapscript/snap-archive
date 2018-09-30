@@ -1,4 +1,5 @@
 /target/
+certificates
 .settings
 .classpath
 .project
