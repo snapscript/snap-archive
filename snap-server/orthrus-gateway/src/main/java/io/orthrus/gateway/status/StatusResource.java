@@ -1,5 +1,6 @@
 package io.orthrus.gateway.status;
 
+import static com.zuooh.http.proxy.core.State.SERVICE_AVAILABLE;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -27,25 +28,33 @@ public class StatusResource {
    
    @GET
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Full status details")
+   @ApiOperation(value = "Show all details")
    public List<StatusResult> status() {
-      return service.status();
+      return service.status((state) -> true);
+   }
+   
+   @GET
+   @Path("/success")
+   @Produces(MediaType.APPLICATION_JSON)
+   @ApiOperation(value = "Show successful details")
+   public List<StatusResult> statusSuccess() {
+      return service.status((state) -> state == SERVICE_AVAILABLE);
    }
    
    @GET
    @Path("/error")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Full status details")
+   @ApiOperation(value = "Show error details")
    public List<StatusResult> statusError() {
-      return service.statusError();
+      return service.status((state) -> state != SERVICE_AVAILABLE);
    }
    
    @GET
-   @Path("/full")
+   @Path("/complete")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Full status details")
-   public List<StatusResult> statusFull() {
-      return service.statusFull();
+   @ApiOperation(value = "Show complete details")
+   public List<StatusResult> statusComplete() {
+      return service.statusComplete((state) -> true);
    }
 
 }

@@ -78,7 +78,7 @@
               "expiry": 20000
             }
           },
-          "match-pattern": "https://${domain}/(directory/.*|hub/.*)",
+          "match-pattern": "https://${domain}/(directory/.*|hub/.*|admin/.*)",
           "ignore-pattern": "https://${domain}/login/.*",
           "template": "https://${domain}/login/%{1}"
         }
@@ -142,7 +142,7 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/",
+            "ping-path": "/v1/health",
             "ping-frequency": 5000,
             "servers": [
               "http://prodapp1:7979/",
