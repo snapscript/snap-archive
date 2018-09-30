@@ -4,7 +4,7 @@ server:
   packages: io.orthrus.sso   
       
 gateway:   
-  domain: www.zuooh.com
+  domain: www.orthrus.io
   plan: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/etc/orthrus.json   
   resources: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway   
 

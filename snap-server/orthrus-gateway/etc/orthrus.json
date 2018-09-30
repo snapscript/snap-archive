@@ -58,20 +58,27 @@
           "template": "https://${domain}/%{1}"
         },
         {
+          "match-pattern": "https://${domain}/",
+          "template": "https://${domain}/index"
+        },
+        {
+          "match-pattern": "https://${domain}/(directory|directory/)",
+          "template": "https://${domain}/directory/listPeople"
+        },        
+        {
           "header-rule": {
-            "header-pattern": "SESSID=(.*)",
+            "header-pattern": ".*SSOID=([a-zA-Z0-9-]*).*",
             "header-name": "Cookie",
             "header-present": false,
             "validation": {
               "validation-services": [
-                "http://localhost:8180/v1/user/%{1}",
-                "http://localhost:8180/v1/user/%{1}",
-                "http://localhost:8180/v1/user/%{1}"
+                "http://localhost:7070/verify/user?SSOID=%{1}",
+                "http://localhost:7070/verify/user?SSOID=%{1}"
               ],
               "expiry": 20000
             }
           },
-          "match-pattern": "https://${domain}/(.*)",
+          "match-pattern": "https://${domain}/(directory/.*|hub/.*)",
           "ignore-pattern": "https://${domain}/login/.*",
           "template": "https://${domain}/login/%{1}"
         }
@@ -79,7 +86,38 @@
       "routes": [
         {
           "route-patterns": [
-            "http.*://${domain}/.*"
+            "http.*://orthrus.io/login/.*",
+            "http.*://www.orthrus.io/login/.*"
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "ping-path": "/",
+            "ping-frequency": 5000,
+            "servers": [
+              "http://localhost:7070/",
+              "http://localhost:7070/"
+            ]
+          }
+        },
+        {
+          "route-patterns": [
+            "http.*://orthrus.io/directory/.*",
+            "http.*://www.orthrus.io/directory/.*"
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "ping-path": "/",
+            "ping-frequency": 5000,
+            "servers": [
+              "http://localhost:8383/",
+              "http://localhost:8383/"
+            ]
+          }
+        },        
+        {
+          "route-patterns": [
+            "http.*://orthrus.io/.*",
+            "http.*://www.orthrus.io/.*"
           ],
           "route-rules": [
             {
@@ -100,8 +138,8 @@
             "ping-path": "/",
             "ping-frequency": 5000,
             "servers": [
-              "http://localhost:4457/",
-              "http://localhost:4457/"
+              "http://localhost:4321/",
+              "http://localhost:4321/"
             ]
           }
         }
