@@ -101,6 +101,21 @@
         },
         {
           "route-patterns": [
+            "http.*://orthrus.io/hub/.*",
+            "http.*://www.orthrus.io/hub/.*"
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "ping-path": "/",
+            "ping-frequency": 5000,
+            "servers": [
+              "http://localhost:3334/",
+              "http://localhost:3334/"
+            ]
+          }
+        },        
+        {
+          "route-patterns": [
             "http.*://orthrus.io/directory/.*",
             "http.*://www.orthrus.io/directory/.*"
           ],
@@ -121,16 +136,16 @@
           ],
           "route-rules": [
             {
-              "pattern": "/path",
-              "template": "/path2"
+              "pattern": "/index.html",
+              "template": "/index"
             },
             {
-              "pattern": "/path",
-              "template": "/path2"
+              "pattern": "/about.html",
+              "template": "/about"
             },
             {
-              "pattern": "/path",
-              "template": "/path2"
+              "pattern": "/contact.html",
+              "template": "/contact"
             }
           ],
           "server-group": {
