@@ -1,5 +1,6 @@
 /target/
 certificate
+log
 .settings
 .classpath
 .project
