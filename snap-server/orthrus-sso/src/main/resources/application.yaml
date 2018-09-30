@@ -1,0 +1,9 @@
+server:
+  directory: c:/temp
+  port: 7979
+  packages: io.orthrus.sso   
+   
+
+logging:
+  level:
+    root: INFO        

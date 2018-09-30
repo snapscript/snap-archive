@@ -1,0 +1,14 @@
+server:
+  directory: c:/temp
+  port: 7979
+  packages: io.orthrus.sso   
+      
+gateway:   
+  domain: www.zuooh.com
+  plan: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/etc/orthrus.json   
+  resources: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway   
+
+logging:
+  level:
+    root: INFO        
+

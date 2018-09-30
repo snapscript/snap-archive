@@ -39,10 +39,11 @@
   </dependencies>
 
   <modules>
-    <module>orthrus-common</module>
     <module>orthrus-rest</module>
     <module>orthrus-directory</module>
     <module>orthrus-domain</module>
+    <module>orthrus-sso</module>
+    <module>orthrus-gateway</module>
   </modules>
 
 </project>

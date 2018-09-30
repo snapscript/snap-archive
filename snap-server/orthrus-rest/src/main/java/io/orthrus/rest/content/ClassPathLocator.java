@@ -50,10 +50,14 @@ public class ClassPathLocator {
          URL resource = ClassPathReader.getURL(path);
          
          if(resource != null) {
-            return FileContent.builder()
+            boolean directory = path.endsWith("/");
+            
+            if(!directory) {
+               return FileContent.builder()
                   .path(path)
                   .resource(resource)
                   .build();
+            }
          }
       }
       return null;
