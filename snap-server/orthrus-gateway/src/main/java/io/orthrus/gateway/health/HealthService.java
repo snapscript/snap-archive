@@ -27,7 +27,7 @@ public class HealthService {
       for(ProxyEndPoint entry : servers) {
          StatusMonitor monitor = entry.getMonitor();
          String state = monitor.getLastStatus();
-         String address = "" + entry.getAddress();
+         String address = String.valueOf(entry.getAddress());
          
          results.put(address, state);
       }

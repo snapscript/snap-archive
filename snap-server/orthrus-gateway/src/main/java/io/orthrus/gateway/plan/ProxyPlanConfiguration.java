@@ -22,9 +22,13 @@ public class ProxyPlanConfiguration {
    private final ProxyPlanParser parser;
    private final String path;
    
-   public ProxyPlanConfiguration(PropertyResolver resolver, @Value("${gateway.plan}") String path) {
+   public ProxyPlanConfiguration(
+         PropertyResolver resolver, 
+         @Value("${gateway.plan}") String path,
+         @Value("${gateway.debug:false}") boolean debug) 
+   {
       this.reader = new ProxyPlanReader(resolver);
-      this.logger = new ProxyTraceLogger();
+      this.logger = new ProxyTraceLogger(debug);
       this.parser = new ProxyPlanParser();
       this.path = path;
    }

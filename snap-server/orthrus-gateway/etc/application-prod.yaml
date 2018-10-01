@@ -4,6 +4,7 @@ server:
   packages: io.orthrus.gateway   
       
 gateway:   
+  debug: false
   domain: www.orthrus.io
   plan: /apps/rp/current/etc/orthrus.json   
   resources: /apps/rp/current   

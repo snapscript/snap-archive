@@ -13,24 +13,28 @@ import com.zuooh.http.proxy.trace.search.EventFormatter;
 public class ProxyTraceLogger implements TraceCollector {
    
    private final EventFormatter formatter;
+   private final boolean enabled;
    
-   public ProxyTraceLogger() {
+   public ProxyTraceLogger(boolean enabled) {
       this.formatter = new EventFormatter();
+      this.enabled = enabled;
    }
 
    @Override
    public void collect(TraceEvent event) {
-      String thread = event.getThread();
-      Object value = event.getValue();
-      Object type = event.getEvent();
-      String text = formatter.format(value);
-      DateTime timeStamp = event.getDateTime();
-      String time = timeStamp.formatDate("HH:mm:ss");
-   
-      if(!StringUtils.isBlank(text)) {
-         log.info("{} [{}] {}: {}", time, thread, type, text);
-      } else {
-         log.info("{} [{}] {}", time, thread, type);
+      if(enabled) {
+         String thread = event.getThread();
+         Object value = event.getValue();
+         Object type = event.getEvent();
+         String text = formatter.format(value);
+         DateTime timeStamp = event.getDateTime();
+         String time = timeStamp.formatDate("HH:mm:ss");
+      
+         if(!StringUtils.isBlank(text)) {
+            log.info("{} [{}] {}: {}", time, thread, type, text);
+         } else {
+            log.info("{} [{}] {}", time, thread, type);
+         }
       }
    }
 }

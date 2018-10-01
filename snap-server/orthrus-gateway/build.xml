@@ -28,7 +28,7 @@
     <fileset dir="etc" />
   </copy>
   <copy file="target/gateway.jar" tofile="build/${build.version}/lib/gateway.jar" overwrite="true" />
-  <copy file="certificate/www.orthrus.io/www.orthrus.io.pfx" tofile="build/${build.version}/certificate/www.orthrus.io/www.orthrus.io.pfx" overwrite="true" />
+  <!-- copy file="certificate/www.orthrus.io/www.orthrus.io.pfx" tofile="build/${build.version}/certificate/www.orthrus.io/www.orthrus.io.pfx" overwrite="true" /-->
   <tar destfile="gateway.tar" basedir="build" />
   <gzip destfile="gateway.tar.gz" src="gateway.tar" />
   <delete file="gateway.tar"/>
