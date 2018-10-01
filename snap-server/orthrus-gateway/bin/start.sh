@@ -4,7 +4,7 @@
 PROCESS_JAR=gateway.jar
 PROCESS_ENVIRONMENT=prod
 PROCESS_CONFIGURATION_FILE=application-$PROCESS_ENVIRONMENT.yaml
-PROCESS_MEMORY="-server -Xms64m -Xmx128m -verbose:gc -Xloggc:log/gc.log -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:InitiatingHeapOccupancyPercent=45 -XX:G1ReservePercent=20 -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+HeapDumpOnOutOfMemoryError -XX:MaxPermSize=128m"
+PROCESS_MEMORY="-server -Xms64m -Xmx128m -verbose:gc -Xloggc:log/gc.log -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:InitiatingHeapOccupancyPercent=45 -XX:G1ReservePercent=20 -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -XX:MaxPermSize=128m"
 PROCESS_HOME=/apps/rp/current export PROCESS_HOME
 PROCESS_OWNER=root
 JAVA_HOME=/usr export JAVA_HOME
@@ -88,7 +88,7 @@ if [ "$CURRENT_USER" != "$PROCESS_OWNER" ]; then
 fi
 
 PATH=$PROCESS_HOME/etc:$PATH export PATH
-CLASSPATH=$PROCESS_HOME/etc:$CLASSPATH export CLASSPATH
+CLASSPATH=$PROCESS_HOME/etc:$PROCESS_HOME/lib/${PROCESS_JAR} export CLASSPATH
 
 echo CLASSPATH=$CLASSPATH
 
@@ -112,8 +112,8 @@ JAVA_OPTS="-Djava.net.preferIPv4Stack=true ${PROCESS_MEMORY}"
 
 HOSTNAME=`hostname -i`
 
-echo "$JAVA_HOME/bin/java ${JAVA_OPTS} -jar -Dspring.profiles.active=${PROCESS_ENVIRONMENT} ${PROCESS_HOME}/lib/${PROCESS_JAR}"
-nohup $JAVA_HOME/bin/java ${JAVA_OPTS} -jar -Dspring.profiles.active=${PROCESS_ENVIRONMENT} ${PROCESS_HOME}/lib/${PROCESS_JAR} 1> log/app.stdout 2> log/app.stderr &
+echo "$JAVA_HOME/bin/java ${JAVA_OPTS} -cp $CLASSPATH -Dspring.profiles.active=${PROCESS_ENVIRONMENT} org.springframework.boot.loader.JarLauncher"
+nohup $JAVA_HOME/bin/java ${JAVA_OPTS} -cp $CLASSPATH -Dspring.profiles.active=${PROCESS_ENVIRONMENT} org.springframework.boot.loader.JarLauncher 1> log/app.stdout 2> log/app.stderr &
 
 PID=$!
 echo $PID > $PID_FILE

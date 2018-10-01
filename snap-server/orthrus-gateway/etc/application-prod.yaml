@@ -6,7 +6,7 @@ server:
 gateway:   
   domain: www.orthrus.io
   plan: /apps/rp/current/etc/orthrus.json   
-  resources: /apps/rp/current/error   
+  resources: /apps/rp/current   
 
 logging:
   level:

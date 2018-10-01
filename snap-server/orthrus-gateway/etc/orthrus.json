@@ -5,7 +5,7 @@
   },
   "hosts": [
     {
-      "name": "zuooh",
+      "name": "orthrus",
       "address": [
         "http://${domain}/",
         "https://${domain}/"
@@ -124,8 +124,7 @@
             "ping-path": "/status",
             "ping-frequency": 5000,
             "servers": [
-              "http://prodapp1:8383/",
-              "http://prodapp2:8383/"
+              "http://prodapp1:8383/"             
             ]
           }
         },   
