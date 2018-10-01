@@ -172,6 +172,9 @@
             "buffer": 8192,
             "ping-path": "/status",
             "ping-frequency": 5000,
+            "ping-headers": {
+               "X-Ping-Request": "true"
+            },
             "servers": [
               "http://prodapp1:4321/",
               "http://prodapp2:4321/"
