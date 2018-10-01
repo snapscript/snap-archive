@@ -11,11 +11,13 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.util.PropertyPlaceholderHelper;
 
+@Slf4j
 @AllArgsConstructor
 public class ProxyPlanReader {
 
@@ -30,24 +32,46 @@ public class ProxyPlanReader {
    public Reader readPlan(String plan) throws IOException {
       String text = readFile(plan);
       
-      if(text != null) {
-         String result = helper.replacePlaceholders(text, (name) -> {
-            return resolver.getProperty(name);
-         });
-         return new StringReader(result);
+      if(text == null) {
+         throw new IllegalStateException("Could not load " + plan);
+      }
+      String result = helper.replacePlaceholders(text, (name) -> {
+         return resolver.getProperty(name);
+      });
+      return new StringReader(result);
+   }
+   
+   private String readFile(String path) throws IOException {
+      String resource = readClassPath(path);
+      
+      if(resource == null) {
+         return readFileSystem(path);
       }
       return null;
    }
    
-   private String readFile(String path) throws IOException {
-      InputStream stream = ClassPathReader.getInputStream(path);
-      
-      if(stream == null) {
+   private String readFileSystem(String path) throws IOException { 
+      try {
          File file = new File(path);
          FileReader reader = new FileReader(file);
          
          return IOUtils.toString(reader);
+      } catch(Exception e) {
+         log.info("Could not load {} from file system", path, e); 
       }
-      return IOUtils.toString(stream, StandardCharsets.UTF_8);
+      return null;
+   }
+   
+   private String readClassPath(String path) throws IOException {
+      try {   
+         InputStream stream = ClassPathReader.getInputStream(path);
+         
+         if(stream != null) {
+            return IOUtils.toString(stream, StandardCharsets.UTF_8);         
+         }
+      } catch(Exception e) {
+         log.info("Could not load {} from classpath", path, e);         
+      }
+      return null;
    }
 }
