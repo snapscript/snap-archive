@@ -18,6 +18,7 @@ public class SchemaCompiler {
                return new Schema<>(type, entity, name);
             }
          }
+         base = base.getSuperclass();
       }
       return new Schema<T>(type, entity, null);
    }

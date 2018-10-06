@@ -3,6 +3,31 @@ server:
   port: 7979
   packages: io.orthrus.sso   
    
+jmx:
+   login: admin
+   password: password12
+   port: 5577
+   
+login:
+   url:
+      directory: http://localhost:7878/
+      base: http://localhost:7979/
+   access-grant:
+      store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/store/grant
+   access-request:
+      store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/store/request  
+   token-store:
+      type: PKCS12   
+      path: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/certificate/www.orthrus.io/www.orthrus.io.pfx 
+      alias: 1
+      password: password12  
+   pass-code:
+      store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/store/code
+      high: 99999
+      low: 11111
+            
+mail:
+   host: localhost
 
 logging:
   level:

@@ -1,0 +1,32 @@
+package io.orthrus.sso.access;
+
+import io.orthrus.store.PrimaryKey;
+
+import java.io.Serializable;
+
+import javax.ws.rs.core.NewCookie;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@Data
+@Builder
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AccessGrant implements Serializable {
+
+   @PrimaryKey
+   private final String email;
+   private final String redirect;
+   private final String cookie;
+   private final long expiry;
+   
+   public NewCookie getCookie() {
+      return new NewCookie("SSOID", cookie, "/", null, null, (int)(expiry / 1000), false);
+   }
+}

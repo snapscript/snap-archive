@@ -1,5 +1,6 @@
 package io.orthrus.store;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public interface DataStore<T> {
@@ -9,7 +10,7 @@ public interface DataStore<T> {
    boolean deleteAll(String column, Comparable<?> value);
    T find(Comparable<?> key);
    T findFirst(String column, Comparable<?> value);
-   Iterable<T> findAll();
-   Iterable<T> findAll(Predicate<T> filter);
-   Iterable<T> findAll(String column, Comparable<?> value);
+   List<T> findAll();
+   List<T> findAll(Predicate<T> filter);
+   List<T> findAll(String column, Comparable<?> value);
 }

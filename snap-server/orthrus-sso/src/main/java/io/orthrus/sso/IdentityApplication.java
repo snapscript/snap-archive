@@ -1,11 +1,19 @@
 package io.orthrus.sso;
 
+import io.orthrus.jmx.EnableManagement;
 import io.orthrus.rest.EnableResourceServer;
+import io.orthrus.sso.access.EnableAccessControl;
+import io.orthrus.sso.login.EnableLogin;
+import io.orthrus.store.EnableDataStore;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+@EnableLogin
+@EnableManagement
+@EnableDataStore
+@EnableAccessControl
 @EnableResourceServer
 @SpringBootApplication
 public class IdentityApplication {

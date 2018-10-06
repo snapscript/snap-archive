@@ -8,8 +8,8 @@ directory:
 
 jmx:
    login: admin
-   password: admin
-   port: 7879
+   password: password12
+   port: 5777
 
 logging:
   level:

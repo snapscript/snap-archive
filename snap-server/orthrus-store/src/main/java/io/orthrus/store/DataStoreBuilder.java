@@ -180,12 +180,12 @@ public class DataStoreBuilder {
       }
 
       @Override
-      public Iterable<T> findAll() {
+      public List<T> findAll() {
          return findAll((object) -> true);
       }
 
       @Override
-      public Iterable<T> findAll(Predicate<T> filter) {
+      public List<T> findAll(Predicate<T> filter) {
          String name = schema.getEntity();
          
          return store.computeInTransaction((transaction) -> {
@@ -221,7 +221,7 @@ public class DataStoreBuilder {
       }
 
       @Override
-      public Iterable<T> findAll(String column, Comparable value) {
+      public List<T> findAll(String column, Comparable value) {
          String name = schema.getEntity();
          
          return store.computeInTransaction((transaction) -> {
