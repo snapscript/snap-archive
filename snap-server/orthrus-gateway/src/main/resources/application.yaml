@@ -8,6 +8,12 @@ gateway:
   plan: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/etc/orthrus.json   
   resources: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway   
 
+jmx:
+   login: admin
+   password: password12
+   port: 9989
+   
+
 logging:
   level:
     root: INFO        
