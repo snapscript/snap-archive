@@ -1,11 +1,15 @@
 package io.orthrus.directory;
 
+import io.orthrus.jmx.EnableManagement;
 import io.orthrus.rest.EnableResourceServer;
+import io.orthrus.store.EnableDataStore;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+@EnableManagement
+@EnableDataStore
 @EnableResourceServer
 @SpringBootApplication
 public class DirectoryApplication {

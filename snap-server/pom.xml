@@ -43,6 +43,9 @@
   </dependencies>
 
   <modules>
+    <module>orthrus-common</module>
+    <module>orthrus-jmx</module>
+    <module>orthrus-store</module>
     <module>orthrus-rest</module>
     <module>orthrus-directory</module>
     <module>orthrus-domain</module>

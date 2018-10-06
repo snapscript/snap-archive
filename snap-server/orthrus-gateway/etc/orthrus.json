@@ -11,8 +11,8 @@
         "https://${domain}/"
       ],
       "static-resources": {
-      	"directory": "${root}",
-      	"path": "/static/.*"
+        "directory": "${root}",
+        "path": "/static/.*"
       },
       "access-log": {
         "file": "${root}/log/access.log",
@@ -55,6 +55,7 @@
       "redirects": [
         {
           "match-pattern": "http://${domain}/(.*)",
+          "ignore-pattern": "http://${domain}/status",
           "template": "https://${domain}/%{1}"
         },
         {
@@ -64,7 +65,7 @@
         {
           "match-pattern": "https://${domain}/(directory|directory/)",
           "template": "https://${domain}/directory/listPeople"
-        },        
+        },
         {
           "header-rule": {
             "header-pattern": ".*SSOID=([a-zA-Z0-9-]*).*",
@@ -72,7 +73,7 @@
             "header-present": false,
             "validation": {
               "validation-headers": {
-                "X-Validation-Request": "true" 
+                "X-Validation-Request": "true"
               },
               "validation-services": [
                 "http://localhost:7070/verify/user?SSOID=%{1}",
@@ -94,8 +95,10 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/status",
-            "ping-frequency": 5000,
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000
+            },
             "servers": [
               "http://prodapp1:7070/",
               "http://prodapp2:7070/"
@@ -109,14 +112,16 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/status",
-            "ping-frequency": 5000,
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000
+            },
             "servers": [
               "http://prodapp1:3334/",
               "http://prodapp2:3334/"
             ]
           }
-        },        
+        },
         {
           "route-patterns": [
             "http.*://orthrus.io/directory/.*",
@@ -124,13 +129,15 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/status",
-            "ping-frequency": 5000,
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000
+            },
             "servers": [
-              "http://prodapp1:8383/"             
+              "http://prodapp1:8383/"
             ]
           }
-        },   
+        },
         {
           "route-patterns": [
             "http.*://orthrus.io/admin/.*",
@@ -144,14 +151,16 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/v1/health",
-            "ping-frequency": 5000,
+            "health-check": {
+              "ping-path": "/v1/health",
+              "ping-frequency": 5000
+            },
             "servers": [
               "http://prodapp1:7979/",
               "http://prodapp2:7979/"
             ]
           }
-        },     
+        },
         {
           "route-patterns": [
             "http.*://orthrus.io/.*",
@@ -173,10 +182,12 @@
           ],
           "server-group": {
             "buffer": 8192,
-            "ping-path": "/status",
-            "ping-frequency": 5000,
-            "ping-headers": {
-               "X-Ping-Request": "true"
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000,
+              "ping-headers": {
+                "X-Ping-Request": "true"
+              }
             },
             "servers": [
               "http://prodapp1:4321/",

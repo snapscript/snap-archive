@@ -3,6 +3,13 @@ server:
   port: 7878
   packages: io.orthrus.directory   
    
+directory:
+   store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-directory/store/user
+
+jmx:
+   login: admin
+   password: admin
+   port: 7879
 
 logging:
   level:
