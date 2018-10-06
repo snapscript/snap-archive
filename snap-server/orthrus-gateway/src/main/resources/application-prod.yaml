@@ -6,7 +6,7 @@ server:
 gateway:   
   debug: false
   domain: www.orthrus.io
-  plan: /apps/rp/current/etc/orthrus.json   
+  plan: /apps/rp/current/etc/plan-prod.json   
   resources: /apps/rp/current   
 
 logging:

@@ -19,8 +19,8 @@
       <filtered>true</filtered>
       <includes>
         <include>plan-@env.name@.json</include>          
-        <include>application-@env.name@.yml</include>
-        <include>application.yml</include>
+        <include>application-@env.name@.yaml</include>
+        <include>application.yaml</include>
         <include>logback.xml</include>        
       </includes>
     </fileSet>
