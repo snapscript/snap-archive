@@ -27,7 +27,6 @@ public class ResourceContainer implements Container {
    public void handle(Request request, Response response) {
       String server = ResourceContainer.class.getSimpleName();
       String method = request.getMethod();
-      String target = request.getTarget();
       long time = System.currentTimeMillis();
       
       try {
@@ -53,11 +52,6 @@ public class ResourceContainer implements Container {
          } catch(IOException ignore) {
             log.info("Could not close response", ignore);
          }
-         int status = response.getCode();
-         long finish = System.currentTimeMillis();
-         long duration = finish - time;
-         
-         log.info("{} {} - {} {} ms", method, target, status, duration);
       }
    }
  

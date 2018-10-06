@@ -21,7 +21,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "${root}/certificate/${domain}/${domain}.pfx",
+        "path": "${root}/etc/${domain}.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [
@@ -117,8 +117,7 @@
               "ping-frequency": 5000
             },
             "servers": [
-              "http://prodapp1:3334/",
-              "http://prodapp2:3334/"
+              "http://prodapp1:3334/"
             ]
           }
         },
