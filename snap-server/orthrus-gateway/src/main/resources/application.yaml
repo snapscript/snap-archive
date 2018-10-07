@@ -5,7 +5,7 @@ server:
       
 gateway:   
   domain: www.orthrus.io
-  plan: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/etc/orthrus.json   
+  plan: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/src/main/resources/plan-local.json   
   resources: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway   
 
 jmx:

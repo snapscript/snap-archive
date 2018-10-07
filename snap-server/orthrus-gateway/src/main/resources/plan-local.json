@@ -21,7 +21,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "${root}/etc/${domain}.pfx",
+        "path": "${root}/certificate/${domain}/${domain}.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [
@@ -93,15 +93,21 @@
             "http.*://orthrus.io/login/.*",
             "http.*://www.orthrus.io/login/.*"
           ],
+          "route-rules": [
+            {
+              "pattern": "/login/(.*)",
+              "template": "/v1/%{1}"
+            }
+          ],
           "server-group": {
             "buffer": 8192,
             "health-check": {
-              "ping-path": "/status",
+              "ping-path": "/v1/status",
               "ping-frequency": 5000
             },
             "servers": [
-              "http://prodapp1:7070/",
-              "http://prodapp2:7070/"
+              "http://prodapp1:7979/",
+              "http://prodapp2:7979/"
             ]
           }
         },
