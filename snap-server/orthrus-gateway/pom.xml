@@ -248,60 +248,6 @@
       </build>
     </profile>
     <profile>
-      <id>remote-deploy-dev</id>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>perform-release-dev</id>
-                <phase>validate</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <tasks>
-                    <exec executable="C:\Program Files\Ant\1.9.3\bin\ant.bat">
-                      <env key="ANT_HOME" value="C:\Program Files\Ant\1.9.3" />
-                      <arg value="-f" />
-                      <arg value="C:\Work\development\bitbucket\install\install\install-ssh.xml" />
-                      <arg value="-Dfilter.file=${project.basedir}/src/main/assembly/filter-dev.properties" />
-                      <arg value="-Duser.name=root" />
-                      <arg value="-Duser.password=6noday" />
-                      <arg value="-Dservice.name=proxy" />
-                      <arg value="-Dscript.location=C:/Work/development/bitbucket/install" />
-                      <arg value="-Darchive.location=c:/Users/Niall/.m2/repository/io/orthrus/orthrus-gateway" />
-                      <arg value="-Darchive.name=zuooh-standard-proxy-site" />
-                      <arg value="-Darchive.suffix=dev" />
-                      <arg value="-Dproject.version=${project.version}" />
-                      <arg value="-Ddeploy.directory=/apps/rp" />
-                      <arg value="-Ddeploy.user=dev" />
-                      <arg value="-Ddeploy.host=devapp1" />
-                      <arg value="-Ddeploy.type=complete" />
-                      <arg value="-Drelease.type=release" />
-                    </exec>
-                  </tasks>
-                </configuration>
-              </execution>
-            </executions>
-            <dependencies>
-              <dependency>
-                <groupId>ant</groupId>
-                <artifactId>ant-jsch</artifactId>
-                <version>1.6.5</version>
-              </dependency>
-              <dependency>
-                <groupId>com.jcraft</groupId>
-                <artifactId>jsch</artifactId>
-                <version>0.1.48</version>
-              </dependency>
-            </dependencies>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
       <id>remote-deploy-prod-primary</id>
       <build>
         <plugins>
