@@ -77,8 +77,8 @@
                 "X-Validation-Request": "true"
               },
               "validation-services": [
-                "http://localhost:7070/v1/access/verify/%{1}",
-                "http://localhost:7070/v1/access/verify/%{1}"
+                "http://prodapp1:7070/v1/access/verify/%{1}",
+                "http://prodapp2:7070/v1/access/verify/%{1}"
               ],
               "expiry": 20000
             }
@@ -102,6 +102,7 @@
           ],      
           "server-group": {
             "buffer": 8192,
+            "selector": "master-slave",
             "health-check": {
               "ping-path": "/v1/ping",
               "ping-frequency": 5000
