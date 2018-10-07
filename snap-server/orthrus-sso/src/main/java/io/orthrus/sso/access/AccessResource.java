@@ -36,7 +36,7 @@ public class AccessResource {
    @GET
    @Path("/grant/list")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
+   @ApiOperation(value = "All grants")
    public Response listGrants(@PathParam("token") String token) {
       List<AccessGrant> requests = service.listGrants();
       return Response.ok(requests).build();
@@ -45,7 +45,7 @@ public class AccessResource {
    @GET
    @Path("/request/list")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
+   @ApiOperation(value = "All requests")
    public Response listRequests() {
       List<AccessRequest> requests = service.listRequests();
       return Response.ok(requests).build();
@@ -54,7 +54,7 @@ public class AccessResource {
    @GET
    @Path("/grant/{token}")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
+   @ApiOperation(value = "Grant access for token")
    public Response getAccess(@PathParam("token") String token) {
       return grantAccess(token);
    }
@@ -62,7 +62,7 @@ public class AccessResource {
    @POST
    @Path("/grant/{token}")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
+   @ApiOperation(value = "Grant access for token")
    public Response grantAccess(@PathParam("token") String token) {
       AccessGrant grant = service.grantAccess(token);
       
@@ -82,7 +82,7 @@ public class AccessResource {
    @GET
    @Path("/grant/code")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
+   @ApiOperation(value = "Grant access for code")
    public Response getAccess(@QueryParam("code") int code) {
       return grantAccess(code);
    }
@@ -90,7 +90,7 @@ public class AccessResource {
    @POST
    @Path("/grant/code")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
+   @ApiOperation(value = "Grant access for code")
    public Response grantAccess(@QueryParam("code") int code) {
       AccessGrant grant = service.grantAccess(code);
       
@@ -107,10 +107,10 @@ public class AccessResource {
       return Response.temporaryRedirect(address).build();
    }
    
-   @POST
+   @GET
    @Path("/verify/{token}")
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
+   @ApiOperation(value = "Verify a token")
    public Response verifyAccess(@PathParam("token") String token) {
       List<String> result = Collections.singletonList(token);
       boolean verified = service.verifyAccess(token);

@@ -25,7 +25,7 @@ public class TokenParser {
      
      if(first < last && first != -1) {
         try {
-           String value = cookie.substring(first, last);
+           String value = cookie.substring(first + 1, last);
            byte[] data = Base64.getDecoder().decode(value);
         
            if(data.length > 0) {
