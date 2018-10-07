@@ -269,7 +269,7 @@
                       <arg value="-Darchive.name=orthrus-directory" />
                       <arg value="-Darchive.suffix=prod-primary" />
                       <arg value="-Dproject.version=${project.version}" />
-                      <arg value="-Ddeploy.directory=/apps/rp" />
+                      <arg value="-Ddeploy.directory=/apps/directory" />
                       <arg value="-Ddeploy.user=root" />
                       <arg value="-Ddeploy.host=prodapp1" />
                       <arg value="-Ddeploy.type=complete" />
@@ -323,7 +323,7 @@
                       <arg value="-Darchive.name=orthrus-directory" />
                       <arg value="-Darchive.suffix=prod-secondary" />
                       <arg value="-Dproject.version=${project.version}" />
-                      <arg value="-Ddeploy.directory=/apps/rp" />
+                      <arg value="-Ddeploy.directory=/apps/directory" />
                       <arg value="-Ddeploy.user=root" />
                       <arg value="-Ddeploy.host=prodapp2" />
                       <arg value="-Ddeploy.type=complete" />

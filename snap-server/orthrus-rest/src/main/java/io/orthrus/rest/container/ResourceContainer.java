@@ -23,16 +23,16 @@ public class ResourceContainer implements Container {
 
    private final ContentHandlerMatcher matcher;
    private final Container container;
+   private final String name;
    
    public void handle(Request request, Response response) {
-      String server = ResourceContainer.class.getSimpleName();
       String method = request.getMethod();
       long time = System.currentTimeMillis();
       
       try {
          ContentHandler handler = matcher.match(request, response);
          
-         response.setValue(SERVER, server);
+         response.setValue(SERVER, name);
          response.setDate(DATE, time);
          
          if(handler != null) {

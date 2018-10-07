@@ -23,11 +23,12 @@ public class ResourceServerConfiguration {
    
    public ResourceServerConfiguration(
          @Value("${server.packages:io.orthrus.rest}") String packages,
+         @Value("${server.name}") String name,
          @Value("${server.directory}") File directory,
          @Value("${server.port}") int port,
          @Value("${server.swagger.enabled:true}") boolean swagger)
    {
-      this.server = new ResourceServer(packages, directory, port, swagger);
+      this.server = new ResourceServer(packages, name, directory, port, swagger);
    }
    
    @Bean

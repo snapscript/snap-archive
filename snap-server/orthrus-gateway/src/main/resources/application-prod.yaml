@@ -1,14 +1,12 @@
 server:
-  directory: /apps/rp/current
-  port: 7979
-  packages: io.orthrus.gateway   
+  directory: /apps/rp/current  
       
 gateway:   
   debug: false
   domain: www.orthrus.io
-  resources: /apps/rp/current 
-  plan: ${gateway.resources}/etc/plan.json  
-  key-store: ${gateway.resources}/etc/${gateway.domain}.pfx     
+  resources: ${server.directory}
+  plan: ${server.directory}/etc/plan.json  
+  key-store: ${server.directory}/etc/${gateway.domain}.pfx     
 
 logging:
   level:

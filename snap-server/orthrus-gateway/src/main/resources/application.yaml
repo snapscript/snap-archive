@@ -1,13 +1,14 @@
 server:
-  directory: c:/temp
+  name: gateway
+  directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway
   port: 7979
   packages: io.orthrus.gateway   
       
 gateway:   
   domain: www.orthrus.io
-  resources: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway 
-  plan: ${gateway.resources}/src/main/resources/plan.json   
-  key-store: ${gateway.resources}/certificate/${gateway.domain}/${gateway.domain}.pfx  
+  resources: ${server.directory} 
+  plan: ${server.directory}/src/main/resources/plan.json   
+  key-store: ${server.directory}/certificate/${gateway.domain}/${gateway.domain}.pfx  
 
 jmx:
    login: admin

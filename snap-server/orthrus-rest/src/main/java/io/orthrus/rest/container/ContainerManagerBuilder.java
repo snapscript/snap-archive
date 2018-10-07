@@ -29,21 +29,20 @@ import org.simpleframework.transport.connect.SocketConnection;
 public class ContainerManagerBuilder {
 
    private final ContentHandlerMatcher matcher;
+   private final ServerName server;
    private final Router router;
    
-   public ContainerManagerBuilder(ContentHandlerMatcher matcher){
-      this(matcher, null);
-   }
-   
-   public ContainerManagerBuilder(ContentHandlerMatcher matcher, Service service) {
+   public ContainerManagerBuilder(ContentHandlerMatcher matcher, Service service, String name) {
       this.router = new DirectRouter(service);
+      this.server = new ServerName(name);
       this.matcher = matcher;
    }
    
    @SneakyThrows
    public ContainerManager create(ResourceConfig config, SSLContext context, int port) {
+      String name =  server.getName(port);
       SimpleContainer container = create(config);
-      Container inner = create(container);
+      Container inner = create(container, name);
    
       try {
          SimpleTraceAnalyzer analyzer = new SimpleTraceAnalyzer();
@@ -61,9 +60,9 @@ public class ContainerManagerBuilder {
       }
    }
    
-   private Container create(SimpleContainer container) {
+   private Container create(SimpleContainer container, String name) {
       try {
-         ResourceContainer delegate = new ResourceContainer(matcher, container);
+         ResourceContainer delegate = new ResourceContainer(matcher, container, name);
          
          if(router != null) {
             return new RouterContainer(delegate, router, 5);

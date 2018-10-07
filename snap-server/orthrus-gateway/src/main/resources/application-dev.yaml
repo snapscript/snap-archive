@@ -4,7 +4,7 @@ server:
   packages: io.orthrus.sso   
       
 gateway:   
-  plan: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/etc/orthrus.json   
+  plan: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/etc/plan.json   
   resources: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway   
 
 logging:
