@@ -22,6 +22,8 @@ public class User implements Serializable {
 
    @PrimaryKey
    private String email;
-   private String guid;
-   private String name;
+   private String password;
+   private String firstName;
+   private String lastName;
+   private String company;
 }

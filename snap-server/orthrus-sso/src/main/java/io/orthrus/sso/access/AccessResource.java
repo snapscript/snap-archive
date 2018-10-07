@@ -37,6 +37,14 @@ public class AccessResource {
    @Path("/grant/{token}")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Add a user")
+   public Response getAccess(@PathParam("token") String token) {
+      return grantAccess(token);
+   }
+   
+   @POST
+   @Path("/grant/{token}")
+   @Produces(MediaType.APPLICATION_JSON)
+   @ApiOperation(value = "Add a user")
    public Response grantAccess(@PathParam("token") String token) {
       AccessGrant grant = service.grantAccess(token);
       
@@ -51,6 +59,14 @@ public class AccessResource {
       }
       URI address = URI.create("/login/invalid-token");
       return Response.temporaryRedirect(address).build();
+   }
+
+   @GET
+   @Path("/grant/code")
+   @Produces(MediaType.APPLICATION_JSON)
+   @ApiOperation(value = "Add a user")
+   public Response getAccess(@QueryParam("code") int code) {
+      return grantAccess(code);
    }
    
    @POST

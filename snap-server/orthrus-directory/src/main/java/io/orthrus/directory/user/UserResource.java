@@ -33,7 +33,7 @@ public class UserResource {
    @ApiOperation(value = "Add a user")
    public User save(User user) {
       service.save(user);
-      return user;
+      return user; // user with guid
    }
    
    @GET

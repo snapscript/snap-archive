@@ -1,7 +1,8 @@
 {
   "attributes": {
     "root": "${gateway.resources}",
-    "domain": "${gateway.domain}"
+    "domain": "${gateway.domain}",
+    "key-store": "${gateway.key-store}"
   },
   "hosts": [
     {
@@ -21,7 +22,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "${root}/certificate/${domain}/${domain}.pfx",
+        "path": "${key-store}",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [
@@ -68,16 +69,16 @@
         },
         {
           "cookie-rule": {
-            "cookie-pattern": "([a-zA-Z0-9-]*)",
-            "cookie-name": "Cookie",
+            "cookie-pattern": "([a-zA-Z0-9-_\\.=]*)",
+            "cookie-name": "SSOID",
             "cookie-present": false,
             "validation": {
               "validation-headers": {
                 "X-Validation-Request": "true"
               },
               "validation-services": [
-                "http://localhost:7979/verify/%{1}",
-                "http://localhost:7979/verify/%{1}"
+                "http://localhost:7070/v1/access/verify/%{1}",
+                "http://localhost:7070/v1/access/verify/%{1}"
               ],
               "expiry": 20000
             }
@@ -98,16 +99,16 @@
               "pattern": "/login/(.*)",
               "template": "/v1/%{1}"
             }
-          ],
+          ],      
           "server-group": {
             "buffer": 8192,
             "health-check": {
-              "ping-path": "/v1/status",
+              "ping-path": "/status",
               "ping-frequency": 5000
             },
             "servers": [
-              "http://prodapp1:7979/",
-              "http://prodapp2:7979/"
+              "http://prodapp1:7070/",
+              "http://prodapp2:7070/"
             ]
           }
         },

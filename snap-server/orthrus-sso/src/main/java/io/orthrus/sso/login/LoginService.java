@@ -16,11 +16,23 @@ public class LoginService {
    private final String directory;
    private final String base;
 
-   public User login(String email, String redirect, String mode) {
+   public Login login(String email, String password, String redirect, String mode) {
       AccessRequest request = service.createRequest(email, redirect);
       LoginType type = LoginType.resolveType(mode);
-      String message = type.generateMail(request, base);
+      Login login = type.generateLogin(request, base);
       
-      return client.login(email, directory, message);
+      if(login.isMail()) {
+         String message = login.getMessage();
+         client.login(email, directory, message);
+      }
+      return login;
+   }
+   
+   public Login register(User user, String redirect, String mode) {
+      User registered = client.register(user, directory);
+      String email = registered.getEmail();
+      String password = registered.getPassword();
+      
+      return login(email, password, redirect, mode);
    }
 }

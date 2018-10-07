@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -31,17 +32,48 @@ public class LoginResource {
    
    @POST
    @Produces(MediaType.APPLICATION_JSON)
-   @ApiOperation(value = "Add a user")
-   public Response grantAccess(
+   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+   @ApiOperation(value = "Authenticate a user")
+   public Response login(
          @QueryParam("email") String email,
+         @QueryParam("password") String password,
          @QueryParam("redirect") String redirect,
          @QueryParam("remember") Boolean remember,
          @QueryParam("type") String type) 
    {
-      URI address = URI.create(redirect);
-      User user = service.login(email, redirect, type);
+      Login login = service.login(email, password, redirect, type);  
+      URI address = login.getRedirect();
       
-      return Response.temporaryRedirect(address).entity(user).build();
+      return Response.temporaryRedirect(address).build();
+   }
+
+   
+   @POST
+   @Path("/register")
+   @Produces(MediaType.APPLICATION_JSON)
+   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+   @ApiOperation(value = "Register a new user")
+   public Response register(
+         @QueryParam("email") String email,
+         @QueryParam("password") String password,
+         @QueryParam("firstName") String firstName,
+         @QueryParam("lastName") String lastName,
+         @QueryParam("company") String company,
+         @QueryParam("redirect") String redirect,
+         @QueryParam("remember") Boolean remember,
+         @QueryParam("type") String type) 
+   {
+      User user = User.builder()
+            .email(email)
+            .password(password)
+            .firstName(firstName)
+            .lastName(lastName)
+            .company(company)
+            .build();
+      Login login = service.register(user, redirect, type);
+      URI address = login.getRedirect();
+      
+      return Response.temporaryRedirect(address).build();
    }
    
 }

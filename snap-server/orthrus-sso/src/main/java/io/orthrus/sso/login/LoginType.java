@@ -2,27 +2,42 @@ package io.orthrus.sso.login;
 
 import io.orthrus.sso.access.AccessRequest;
 
+import java.net.URI;
+
 public enum LoginType {
    OTP {
       @Override
-      public String generateMail(AccessRequest request, String base) {
+      public Login generateLogin(AccessRequest request, String base) {
          int code = request.getCode();
-         String address = base + "/login/access-code";
+         String address = String.format("%s/login/access-code", base);
+         String normal = address.replace("//login/", "/login/");
          
-         return "Please enter " + code + " to " + address;
+         return new Login(this, null, "Please enter " + code + " to " + normal, true);
       }
    },
    TOKEN {
       @Override
-      public String generateMail(AccessRequest request, String base) {
+      public Login generateLogin(AccessRequest request, String base) {
          String token = request.getToken();
-         String address = base + "/login/grant/" + token;
+         String address = String.format("%s/login/access/grant/%s", base, token);
+         String normal = address.replace("//login/", "/login/");
          
-         return "Please click " + address;
+         return new Login(this, null, "Please click " + normal, true);
+      }
+   },
+   PASSWORD {
+      @Override
+      public Login generateLogin(AccessRequest request, String base) {
+         String token = request.getToken();
+         String address = String.format("%s/login/access/grant/%s", base, token);
+         String normal = address.replace("//login/", "/login/");
+         URI redirect = URI.create(normal);
+         
+         return new Login(this, redirect, address, false);
       }
    };
   
-   public abstract String generateMail(AccessRequest request, String base);
+   public abstract Login generateLogin(AccessRequest request, String base);
 
    public static LoginType resolveType(String token) {
       if(token != null) {

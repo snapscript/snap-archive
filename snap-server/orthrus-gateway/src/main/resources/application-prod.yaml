@@ -6,8 +6,9 @@ server:
 gateway:   
   debug: false
   domain: www.orthrus.io
-  plan: /apps/rp/current/etc/plan-prod.json   
-  resources: /apps/rp/current   
+  resources: /apps/rp/current 
+  plan: ${gateway.resources}/etc/plan.json  
+  key-store: ${gateway.resources}/etc/${gateway.domain}.pfx     
 
 logging:
   level:

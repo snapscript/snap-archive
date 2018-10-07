@@ -1,6 +1,6 @@
 server:
   directory: c:/temp
-  port: 7979
+  port: 7070
   packages: io.orthrus.sso   
    
 jmx:
@@ -11,7 +11,7 @@ jmx:
 login:
    url:
       directory: http://localhost:7878/
-      base: http://localhost:7979/
+      base: https://orthrus.io/
    access-grant:
       store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/store/grant
    access-request:
