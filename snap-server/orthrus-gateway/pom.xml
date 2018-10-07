@@ -144,58 +144,6 @@
       </build>
     </profile>
     <profile>
-      <id>dev</id>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>dev</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <tasks>
-                    <copy file="src/main/assembly/assembly.xml" tofile="${project.build.directory}/assembly/assembly-dev.xml">
-                      <filterset>
-                        <filter token="env.name" value="dev" />
-                        <filter token="archive.suffix" value="dev" />
-                      </filterset>
-                    </copy>
-                  </tasks>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>
-              <finalName>proxy-${project.version}</finalName>
-            </configuration>
-            <executions>
-              <execution>
-                <id>dev</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-                <configuration>
-                  <filters>
-                    <filter>${project.basedir}/src/main/assembly/filter-dev.properties</filter>
-                  </filters>
-                  <descriptors>
-                    <descriptor>${project.build.directory}/assembly/assembly-dev.xml</descriptor>
-                  </descriptors>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
       <id>prod-primary</id>
       <build>
         <plugins>

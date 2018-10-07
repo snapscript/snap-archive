@@ -1,5 +1,5 @@
 server:
-  directory: c:/temp
+  directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso
   port: 7070
   packages: io.orthrus.sso   
    
@@ -10,19 +10,19 @@ jmx:
    
 login:
    url:
-      directory: http://localhost:7878/
+      directory: http://localhost:8383/
       base: https://orthrus.io/
    access-grant:
-      store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/store/grant
+      store: ${server.directory}/store/grant
    access-request:
-      store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/store/request  
+      store: ${server.directory}/store/request  
    token-store:
       type: PKCS12   
       path: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/certificate/www.orthrus.io/www.orthrus.io.pfx 
       alias: 1
       password: password12  
    pass-code:
-      store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/store/code
+      store: ${server.directory}/store/code
       high: 99999
       low: 11111
             

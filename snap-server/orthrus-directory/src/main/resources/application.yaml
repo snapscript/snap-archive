@@ -1,10 +1,10 @@
 server:
-  directory: c:/temp
-  port: 7878
+  directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-directory
+  port: 8383
   packages: io.orthrus.directory   
    
 directory:
-   store: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-directory/store/user
+   store: ${server.directory}/store/user
 
 jmx:
    login: admin

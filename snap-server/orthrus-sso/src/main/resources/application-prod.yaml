@@ -1,0 +1,10 @@
+server:
+  directory: /apps/sso/current
+  port: 7070
+  packages: io.orthrus.sso  
+      
+login:
+   url:
+      directory: http://prodapp1:8383/ 
+   token-store:
+      path: /apps/rp/current/www.orthrus.io.pfx 

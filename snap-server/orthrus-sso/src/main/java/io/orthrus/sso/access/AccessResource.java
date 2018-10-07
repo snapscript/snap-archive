@@ -32,6 +32,24 @@ public class AccessResource {
    public AccessResource(@Context AccessService service) {
       this.service = service;
    }
+
+   @GET
+   @Path("/grant/list")
+   @Produces(MediaType.APPLICATION_JSON)
+   @ApiOperation(value = "Add a user")
+   public Response listGrants(@PathParam("token") String token) {
+      List<AccessGrant> requests = service.listGrants();
+      return Response.ok(requests).build();
+   }
+   
+   @GET
+   @Path("/request/list")
+   @Produces(MediaType.APPLICATION_JSON)
+   @ApiOperation(value = "Add a user")
+   public Response listRequests() {
+      List<AccessRequest> requests = service.listRequests();
+      return Response.ok(requests).build();
+   }
    
    @GET
    @Path("/grant/{token}")

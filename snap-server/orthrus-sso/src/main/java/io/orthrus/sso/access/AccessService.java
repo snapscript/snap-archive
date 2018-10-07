@@ -25,6 +25,14 @@ public class AccessService {
    private final TokenGenerator generator;
    private final TokenParser parser;
   
+   public List<AccessGrant> listGrants() {
+      return grants.findAll();
+   }
+   
+   public List<AccessRequest> listRequests() {
+      return requests.findAll();
+   }
+   
    public AccessRequest createRequest(String email, String redirect) {
       String token = UUID.randomUUID().toString();
       PassCode code = calculator.calculate(email);
@@ -124,13 +132,5 @@ public class AccessService {
          }
       }
       return false;
-   }
-   
-   public List<AccessRequest> listRequests() {
-      return requests.findAll();
-   }
-   
-   public List<AccessGrant> listGrants() {
-      return grants.findAll();
    }
 }
