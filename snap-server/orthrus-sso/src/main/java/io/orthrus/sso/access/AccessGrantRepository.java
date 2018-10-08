@@ -16,11 +16,11 @@ public class AccessGrantRepository {
    }
    
    public void deleteByCookie(String cookie){
-      store.deleteFirst("cookie", cookie);
+      store.delete("cookie", cookie);
    }
 
    public AccessGrant findByCookie(String cookie){
-      return store.findFirst("cookie", cookie);
+      return store.find("cookie", cookie);
    }
   
    public List<AccessGrant> findAll() {

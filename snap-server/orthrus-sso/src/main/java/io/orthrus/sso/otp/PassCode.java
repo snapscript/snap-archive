@@ -1,5 +1,6 @@
 package io.orthrus.sso.otp;
 
+import io.orthrus.store.Entity;
 import io.orthrus.store.PrimaryKey;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

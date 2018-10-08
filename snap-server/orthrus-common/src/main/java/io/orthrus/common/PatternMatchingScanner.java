@@ -20,9 +20,9 @@ public class PatternMatchingScanner implements ClassPathScanner {
    private final String[] packages;
    private final String suffix;
    
-   public PatternMatchingScanner(String suffix, String... packages) {
+   public PatternMatchingScanner(String suffix, String packages) {
       this.resolver = new PathMatchingResourcePatternResolver();
-      this.packages = packages;
+      this.packages = packages.split("\\s*,\\s*");
       this.suffix = suffix;
    }
    

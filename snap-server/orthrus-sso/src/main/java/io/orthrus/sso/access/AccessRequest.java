@@ -1,5 +1,6 @@
 package io.orthrus.sso.access;
 
+import io.orthrus.store.Entity;
 import io.orthrus.store.PrimaryKey;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Maps;
 
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

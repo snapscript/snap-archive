@@ -10,7 +10,7 @@ public class AnnotationPresentScanner implements ClassPathScanner {
    private final Class<? extends Annotation> annotation;
    private final ClassPathScanner scanner;
    
-   public AnnotationPresentScanner(Class<? extends Annotation> annotation, String suffix, String... packages) {
+   public AnnotationPresentScanner(Class<? extends Annotation> annotation, String suffix, String packages) {
       this.scanner = new PatternMatchingScanner(suffix, packages);
       this.annotation = annotation;
    }

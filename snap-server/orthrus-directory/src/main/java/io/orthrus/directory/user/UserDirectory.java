@@ -14,10 +14,10 @@ public class UserDirectory {
    }
    
    public User findByEmail(String email) {
-      return store.findFirst("email", email);
+      return store.find("email", email);
    }
    
    public User findByGuid(String guid) {
-      return store.findFirst("guid", guid);
+      return store.find("guid", guid);
    }
 }

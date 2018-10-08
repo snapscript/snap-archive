@@ -18,7 +18,7 @@ public class ResourceScanner {
    
    private final ClassPathScanner scanner;
    
-   public ResourceScanner(String... packages) {
+   public ResourceScanner(String packages) {
       this.scanner = new AnnotationPresentScanner(Path.class, RESOURCE_SUFFIX, packages);
    }
    

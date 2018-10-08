@@ -12,6 +12,11 @@ jmx:
    password: password12
    port: 5777
 
+tuple:
+   name: ${server.name}
+   packages: io.orthrus
+   port: 2${server.port}  
+
 logging:
   level:
     root: INFO        

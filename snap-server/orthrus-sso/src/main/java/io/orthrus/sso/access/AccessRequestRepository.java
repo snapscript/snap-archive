@@ -16,19 +16,19 @@ public class AccessRequestRepository {
    }
    
    public void deleteByToken(String token){
-      store.deleteFirst("token", token);
+      store.delete("token", token);
    }
    
    public void deleteByCode(int code){
-      store.deleteFirst("code", code);
+      store.delete("code", code);
    }
    
    public AccessRequest findByToken(String token){
-      return store.findFirst("token", token);
+      return store.find("token", token);
    }
    
    public AccessRequest findByCode(int code){
-      return store.findFirst("code", code);
+      return store.find("code", code);
    }
   
    public List<AccessRequest> findAll() {

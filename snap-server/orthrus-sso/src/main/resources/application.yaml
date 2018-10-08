@@ -26,6 +26,11 @@ login:
       store: ${server.directory}/store/code
       high: 99999
       low: 11111
+      
+tuple:
+   name: ${server.name}
+   packages: io.orthrus
+   port: 2${server.port}         
             
 mail:
    host: localhost

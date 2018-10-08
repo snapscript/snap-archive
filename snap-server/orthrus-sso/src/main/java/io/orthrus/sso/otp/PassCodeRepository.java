@@ -13,11 +13,11 @@ public class PassCodeRepository {
    }
    
    public void deleteByCode(int code){
-      store.deleteFirst("code", code);
+      store.delete("code", code);
    }
    
    public PassCode findByCode(int code){
-      return store.findFirst("code", code);
+      return store.find("code", code);
    }
   
    public Iterable<PassCode> findAll() {
