@@ -1,11 +1,15 @@
 package io.orthrus.store.tuple;
 
+import static io.orthrus.store.tuple.PersistentStore.ANNOTATION_SOURCE;
+
+import java.net.InetAddress;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import jetbrains.exodus.entitystore.PersistentEntityStore;
+import lombok.SneakyThrows;
 
 import com.zuooh.tuple.Tuple;
 import com.zuooh.tuple.TupleListener;
@@ -30,6 +34,7 @@ class PersistentStoreBuilder {
       this.origin = origin;
    }
 
+   @SneakyThrows
    public TupleStore create(PersistentEntityStore store, String[] key, String name) {
       PersistentEntityBuilder builder = new PersistentEntityBuilder(key, name);
       TupleListener listener = new PersistentListener(builder, store, publisher, key);
@@ -38,7 +43,10 @@ class PersistentStoreBuilder {
       Query query = new Query(origin, predicates);
       
       if(Objects.nonNull(remote) && !remote.isEmpty()) {
-         predicates.put(name, "*");
+         InetAddress address = InetAddress.getLocalHost();
+         String host = address.getCanonicalHostName();
+         
+         predicates.put(name, ANNOTATION_SOURCE + " != " + host);
          subscriber.subscribe(listener, query);
       }
       List<Tuple> tuples = adapter.findAll();

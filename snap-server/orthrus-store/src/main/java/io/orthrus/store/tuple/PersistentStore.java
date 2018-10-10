@@ -20,6 +20,7 @@ class PersistentStore implements TupleStore {
 
    public static final String ANNOTATION_VERSION = "@version";
    public static final String ANNOTATION_TIME = "@time";
+   public static final String ANNOTATION_SOURCE = "@source";
    
    private final PersistentEntityStore store;
    private final TupleListener listener;
