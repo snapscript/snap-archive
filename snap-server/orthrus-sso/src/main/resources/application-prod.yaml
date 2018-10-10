@@ -8,3 +8,6 @@ login:
       directory: http://prodapp1:8383/ 
    token-store:
       path: /apps/rp/current/etc/www.orthrus.io.pfx 
+      
+tuple:
+   remote: @tuple.remote@        
