@@ -1,8 +1,5 @@
 package io.orthrus.store.tuple;
 
-import static io.orthrus.store.Reserved.SOURCE;
-import io.orthrus.store.Reserved;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +40,7 @@ class PersistentStoreBuilder {
       Query query = new Query(origin, predicates);
       
       if(Objects.nonNull(remote) && !remote.isEmpty()) {
-         predicates.put(name, SOURCE + " != " + host);
+         predicates.put(name, "*");
          subscriber.subscribe(listener, query);
       }
       List<Tuple> tuples = adapter.findAll();
