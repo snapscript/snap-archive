@@ -31,7 +31,8 @@ class PersistentStoreBuilder {
    }
 
    public TupleStore create(PersistentEntityStore store, String[] key, String name) {
-      TupleListener listener = new PersistentListener(store, publisher, key, name);
+      PersistentEntityBuilder builder = new PersistentEntityBuilder(key, name);
+      TupleListener listener = new PersistentListener(builder, store, publisher, key);
       PersistentStore adapter = new PersistentStore(store, listener, key, name);
       Map<String, String> predicates = new LinkedHashMap<>();
       Query query = new Query(origin, predicates);

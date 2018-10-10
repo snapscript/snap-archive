@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import jetbrains.exodus.entitystore.Entity;
-import jetbrains.exodus.entitystore.EntityIterable;
 import jetbrains.exodus.entitystore.PersistentEntityStore;
 import lombok.AllArgsConstructor;
 
@@ -19,10 +18,10 @@ import com.zuooh.tuple.TuplePublisher;
 @AllArgsConstructor
 class PersistentListener extends TupleAdapter {
    
+   private final PersistentEntityBuilder builder;
    private final PersistentEntityStore store;
    private final TuplePublisher publisher;
    private final String[] key;
-   private final String name;
 
    @Override
    public void onUpdate(Tuple tuple) {
@@ -31,30 +30,22 @@ class PersistentListener extends TupleAdapter {
       if(update != null) {
          store.computeInTransaction((transaction) -> {
             Map<String, Object> attributes = update.getAttributes();
-            
-            if(key != null) {
-               Comparable<?> value = (Comparable<?>)attributes.get(key[0]);
-               EntityIterable iterable = transaction.find(name, key[0], value);
-               
-               for(Entity entity : iterable) {
-                  entity.delete();
-               }
-            }
-            Entity entity = transaction.newEntity(name);
+            Comparable<?> value = (Comparable<?>)attributes.get(key[0]);
+            Entity entity = builder.create(transaction, value);
             Set<Map.Entry<String, Object>> entries = attributes.entrySet();
             long time = System.currentTimeMillis();
             long version = update.getChange();
             
             for(Map.Entry<String, Object> entry : entries) {
                String column = entry.getKey();
-               Comparable<?> value = (Comparable<?>)entry.getValue();
+               Comparable<?> attribute = (Comparable<?>)entry.getValue();
                
                if(value == null){
                   if(Objects.equals(column, key)) {
                      throw new IllegalStateException("Primary key is null");
                   }
                } else {
-                  entity.setProperty(column, value);
+                  entity.setProperty(column, attribute);
                }
             }
             entity.setProperty(ANNOTATION_TIME, time);
