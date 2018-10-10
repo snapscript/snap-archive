@@ -7,6 +7,7 @@ import io.orthrus.store.Schema;
 import io.orthrus.store.SchemaCompiler;
 
 import java.io.File;
+import java.net.InetAddress;
 
 import jetbrains.exodus.entitystore.PersistentEntityStore;
 import jetbrains.exodus.entitystore.PersistentEntityStores;
@@ -41,12 +42,14 @@ public class TupleStoreBuilder {
       private final PersistentStoreBuilder builder;
       private final SchemaCompiler compiler;
       private final Catalog catalog;
+      private final Origin origin;
       private final File path;
       
       public PersistentStoreLoader(Subscriber subscriber, Catalog catalog, Origin origin, File path, String remote) {
          this.builder = new PersistentStoreBuilder(subscriber, catalog, origin, remote);
          this.compiler = new SchemaCompiler();
          this.catalog = catalog;
+         this.origin = origin;
          this.path = path;
       }
       
@@ -56,6 +59,7 @@ public class TupleStoreBuilder {
          String name = type.getSimpleName();
          String root = path.getCanonicalPath();
          PersistentEntityStore store = PersistentEntityStores.newInstance(root + "/" + name);
+         String host = origin.getHost();
          Schema<?> schema = compiler.compile(type);
          Structure structure = schema.getStructure();
          String[] key = structure.getKey();
@@ -67,7 +71,7 @@ public class TupleStoreBuilder {
          if(!path.exists()) {
             path.mkdirs();
          }
-         return builder.create(store, key, name);
+         return builder.create(store, host, key, name);
       }
    }
 }

@@ -1,12 +1,16 @@
 package io.orthrus.store;
 
+import static io.orthrus.store.Reserved.SOURCE;
 import io.orthrus.store.tuple.TupleStore;
 import io.orthrus.store.tuple.TupleStoreBuilder;
 
+import java.net.InetAddress;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 
 import com.google.common.collect.Lists;
 import com.zuooh.message.bind.ObjectMarshaller;
@@ -24,11 +28,14 @@ public class DataStoreBuilder {
       this.builder = builder;
    }
 
+   @SneakyThrows
    public <T> DataStore<T> create(Class<T> type) {
       TupleStore store = builder.create(type);
       Schema<T> schema = compiler.compile(type);
+      InetAddress address = InetAddress.getLocalHost();
+      String host = address.getCanonicalHostName();
       
-      return new PersistentDataStore<>(converter, store, schema);
+      return new PersistentDataStore<>(converter, store, schema, host);
    }
    
    @AllArgsConstructor
@@ -37,10 +44,14 @@ public class DataStoreBuilder {
       private final EntityConverter converter;
       private final TupleStore store;
       private final Schema<T> schema;
+      private final String host;
 
       @Override
       public void save(T object) {
          Tuple tuple = converter.fromEntity(object, schema);
+         Map<String, Object> attributes = tuple.getAttributes();
+         
+         attributes.put(SOURCE, host);
          store.save(tuple);
       }
 

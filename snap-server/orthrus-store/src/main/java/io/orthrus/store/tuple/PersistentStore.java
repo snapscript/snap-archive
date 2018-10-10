@@ -1,5 +1,8 @@
 package io.orthrus.store.tuple;
 
+import static io.orthrus.store.Reserved.VERSION;
+import io.orthrus.store.Reserved;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +20,6 @@ import com.zuooh.tuple.TupleListener;
 
 @AllArgsConstructor
 class PersistentStore implements TupleStore {
-
-   public static final String ANNOTATION_VERSION = "@version";
-   public static final String ANNOTATION_TIME = "@time";
-   public static final String ANNOTATION_SOURCE = "@source";
    
    private final PersistentEntityStore store;
    private final TupleListener listener;
@@ -75,7 +74,7 @@ class PersistentStore implements TupleStore {
             Map<String, Object> attributes = Maps.newTreeMap();
             Entity entity = iterable.getFirst();
             List<String> properties = entity.getPropertyNames();
-            Long version = (Long)entity.getProperty(ANNOTATION_VERSION);
+            long version = (Long)entity.getProperty(VERSION);
             
             for(String property : properties) {
                Comparable<?> object = entity.getProperty(property);
@@ -103,7 +102,7 @@ class PersistentStore implements TupleStore {
             for(Entity entity : iterable) {
                Map<String, Object> attributes = Maps.newTreeMap();
                List<String> properties = entity.getPropertyNames();
-               Long version = (Long)entity.getProperty(ANNOTATION_VERSION);
+               long version = (Long)entity.getProperty(VERSION);
                
                for(String property : properties) {
                   Comparable<?> object = entity.getProperty(property);
@@ -132,7 +131,7 @@ class PersistentStore implements TupleStore {
             for(Entity entity : iterable) {
                Map<String, Object> attributes = Maps.newLinkedHashMap();
                List<String> properties = entity.getPropertyNames();
-               Long version = (Long)entity.getProperty(ANNOTATION_VERSION);
+               long version = (Long)entity.getProperty(VERSION);
                
                for(String property : properties) {
                   Comparable<?> object = entity.getProperty(property);

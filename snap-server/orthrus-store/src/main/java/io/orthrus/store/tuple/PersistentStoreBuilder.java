@@ -1,8 +1,8 @@
 package io.orthrus.store.tuple;
 
-import static io.orthrus.store.tuple.PersistentStore.ANNOTATION_SOURCE;
+import static io.orthrus.store.Reserved.SOURCE;
+import io.orthrus.store.Reserved;
 
-import java.net.InetAddress;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,7 @@ class PersistentStoreBuilder {
    }
 
    @SneakyThrows
-   public TupleStore create(PersistentEntityStore store, String[] key, String name) {
+   public TupleStore create(PersistentEntityStore store, String host, String[] key, String name) {
       PersistentEntityBuilder builder = new PersistentEntityBuilder(key, name);
       TupleListener listener = new PersistentListener(builder, store, publisher, key);
       PersistentStore adapter = new PersistentStore(store, listener, key, name);
@@ -43,10 +43,7 @@ class PersistentStoreBuilder {
       Query query = new Query(origin, predicates);
       
       if(Objects.nonNull(remote) && !remote.isEmpty()) {
-         InetAddress address = InetAddress.getLocalHost();
-         String host = address.getCanonicalHostName();
-         
-         predicates.put(name, ANNOTATION_SOURCE + " != " + host);
+         predicates.put(name, SOURCE + " != " + host);
          subscriber.subscribe(listener, query);
       }
       List<Tuple> tuples = adapter.findAll();

@@ -1,7 +1,7 @@
 package io.orthrus.store.tuple;
 
-import static io.orthrus.store.tuple.PersistentStore.ANNOTATION_TIME;
-import static io.orthrus.store.tuple.PersistentStore.ANNOTATION_VERSION;
+import static io.orthrus.store.Reserved.TIME;
+import static io.orthrus.store.Reserved.VERSION;
 
 import java.util.Map;
 import java.util.Objects;
@@ -48,8 +48,8 @@ class PersistentListener extends TupleAdapter {
                   entity.setProperty(column, attribute);
                }
             }
-            entity.setProperty(ANNOTATION_TIME, time);
-            entity.setProperty(ANNOTATION_VERSION, version);
+            entity.setProperty(TIME, time);
+            entity.setProperty(VERSION, version);  
             return entity.getId();
          });
       }
