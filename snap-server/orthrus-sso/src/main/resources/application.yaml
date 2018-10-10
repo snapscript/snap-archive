@@ -12,22 +12,18 @@ jmx:
 login:
    url:
       directory: http://localhost:8383/
-      base: https://orthrus.io/
-   access-grant:
-      store: ${server.directory}/store/grant
-   access-request:
-      store: ${server.directory}/store/request  
+      base: https://orthrus.io/ 
    token-store:
       type: PKCS12   
       path: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/certificate/www.orthrus.io/www.orthrus.io.pfx 
       alias: 1
       password: password12  
    pass-code:
-      store: ${server.directory}/store/code
       high: 99999
       low: 11111
       
 tuple:
+   path: ${server.directory}/store/${spring.profiles.active}
    name: ${server.name}
    packages: io.orthrus
    port: 2${server.port}         

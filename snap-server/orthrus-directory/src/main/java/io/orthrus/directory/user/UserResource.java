@@ -12,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 
 @Path(value = UserResource.RESOURCE_PATH)
@@ -31,24 +33,34 @@ public class UserResource {
    @PUT
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Add a user")
-   public User save(User user) {
+   public Response save(User user) {
       service.save(user);
-      return user; // user with guid
+      return Response.ok(user).build(); // user with guid
    }
    
    @GET
    @Path("/guid/{guid}")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Get user by guid")
-   public User findByGuid(@PathParam("guid") String guid) {
-      return service.findByGuid(guid);
+   public Response findByGuid(@PathParam("guid") String guid) {
+      User user = service.findByGuid(guid);
+      
+      if(user == null) {
+         return Response.status(Status.NOT_FOUND).build();
+      }
+      return Response.ok(user).build();
    }
    
    @GET
    @Path("/email/{email}")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Get user by email")
-   public User findByEmail(@PathParam("email") String email) {
-      return service.findByEmail(email);
+   public Response findByEmail(@PathParam("email") String email) {
+      User user = service.findByEmail(email);
+      
+      if(user == null) {
+         return Response.status(Status.NOT_FOUND).build();
+      }
+      return Response.ok(user).build();
    }
 }

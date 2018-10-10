@@ -2,10 +2,7 @@ server:
   name: directory
   directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-directory
   port: 8383
-  packages: io.orthrus.directory   
-   
-directory:
-   store: ${server.directory}/store/user
+  packages: io.orthrus.directory,io.orthrus.store   
 
 jmx:
    login: admin
@@ -13,6 +10,7 @@ jmx:
    port: 5777
 
 tuple:
+   path: ${server.directory}/store/${spring.profiles.active}
    name: ${server.name}
    packages: io.orthrus
    port: 2${server.port}  

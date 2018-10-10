@@ -14,20 +14,20 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zuooh.tuple.Tuple;
 import com.zuooh.tuple.TupleListener;
-import com.zuooh.tuple.TuplePublisher;
 
 @AllArgsConstructor
 class PersistentStore implements TupleStore {
+
+   public static final String ANNOTATION_VERSION = "@version";
+   public static final String ANNOTATION_TIME = "@time";
    
    private final PersistentEntityStore store;
-   private final TuplePublisher publisher;
    private final TupleListener listener;
    private final String[] key;
    private final String name;
 
    @Override
    public void save(Tuple tuple) {
-      publisher.publish(tuple);
       listener.onUpdate(tuple);
    }
 
@@ -71,15 +71,16 @@ class PersistentStore implements TupleStore {
          EntityIterable iterable = transaction.find(name, key[0], value);
          
          if(!iterable.isEmpty()) {
-            Map<String, Object> attributes = Maps.newLinkedHashMap();
+            Map<String, Object> attributes = Maps.newTreeMap();
             Entity entity = iterable.getFirst();
             List<String> properties = entity.getPropertyNames();
+            Long version = (Long)entity.getProperty(ANNOTATION_VERSION);
             
             for(String property : properties) {
                Comparable<?> object = entity.getProperty(property);
                attributes.put(property, object);
             }
-            return new Tuple(attributes, name);
+            return new Tuple(attributes, name, version);
          }
          return null;
       });
@@ -99,14 +100,15 @@ class PersistentStore implements TupleStore {
             List<Tuple> list = Lists.newArrayList();
          
             for(Entity entity : iterable) {
-               Map<String, Object> attributes = Maps.newLinkedHashMap();
+               Map<String, Object> attributes = Maps.newTreeMap();
                List<String> properties = entity.getPropertyNames();
+               Long version = (Long)entity.getProperty(ANNOTATION_VERSION);
                
                for(String property : properties) {
                   Comparable<?> object = entity.getProperty(property);
                   attributes.put(property, object);
                }
-               Tuple tuple = new Tuple(attributes, name);
+               Tuple tuple = new Tuple(attributes, name, version);
                
                if(filter.test(tuple)) {
                   list.add(tuple);
@@ -129,12 +131,13 @@ class PersistentStore implements TupleStore {
             for(Entity entity : iterable) {
                Map<String, Object> attributes = Maps.newLinkedHashMap();
                List<String> properties = entity.getPropertyNames();
+               Long version = (Long)entity.getProperty(ANNOTATION_VERSION);
                
                for(String property : properties) {
                   Comparable<?> object = entity.getProperty(property);
                   attributes.put(property, object);
                }
-               Tuple tuple = new Tuple(attributes, name);
+               Tuple tuple = new Tuple(attributes, name, version);
                
                list.add(tuple);
             }

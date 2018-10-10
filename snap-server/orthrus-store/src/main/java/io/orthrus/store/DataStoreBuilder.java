@@ -3,7 +3,6 @@ package io.orthrus.store;
 import io.orthrus.store.tuple.TupleStore;
 import io.orthrus.store.tuple.TupleStoreBuilder;
 
-import java.io.File;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -25,8 +24,8 @@ public class DataStoreBuilder {
       this.builder = builder;
    }
 
-   public <T> DataStore<T> create(Class<T> type, File path) {
-      TupleStore store = builder.create(type, path);
+   public <T> DataStore<T> create(Class<T> type) {
+      TupleStore store = builder.create(type);
       Schema<T> schema = compiler.compile(type);
       
       return new PersistentDataStore<>(converter, store, schema);
@@ -63,13 +62,21 @@ public class DataStoreBuilder {
       @Override
       public T find(Comparable<?> value) {
          Tuple tuple = store.find(value);
-         return (T)converter.toEntity(tuple);
+         
+         if(tuple != null) {
+            return (T)converter.toEntity(tuple);
+         }
+         return null;
       }
       
       @Override
       public T find(String column, Comparable<?> value) {
          Tuple tuple = store.find(column, value);
-         return (T)converter.toEntity(tuple);
+         
+         if(tuple != null) {
+            return (T)converter.toEntity(tuple);
+         }
+         return null;
       }
 
       @Override

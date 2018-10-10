@@ -1,5 +1,6 @@
 package io.orthrus.store.tuple;
 
+import java.io.File;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -20,14 +21,16 @@ import com.zuooh.tuple.query.Origin;
 
 class TupleStoreSubscriber {
    
+   private final File path;
    private final String remote;
    private final String name;
    private final int port;
 
-   public TupleStoreSubscriber(String name, String remote, int port) {
+   public TupleStoreSubscriber(File path, String name, String remote, int port) {
       this.remote = remote;
       this.name = name;
       this.port = port;
+      this.path = path;
    }
 
    @SneakyThrows
@@ -35,11 +38,12 @@ class TupleStoreSubscriber {
       Origin origin = new Origin(name, host, port);
       Executor executor = new ScheduledThreadPoolExecutor(2);
       Reactor reactor = new ExecutorReactor(executor);
-      SocketBuilder socket = new DirectSocketBuilder(null, remote, port);
+      TupleStoreTracer tracer = new TupleStoreTracer();
+      SocketBuilder socket = new DirectSocketBuilder(tracer, remote, port);
       TransportBuilder transport = new DirectTransportBuilder(socket, reactor);
       SessionRegistryListener listener = new SessionRegistryListener(registry);
       GridSubscriber subscriber = new GridSubscriber(listener, transport);
 
-      return new TupleStoreBuilder(subscriber, catalog, origin);
+      return new TupleStoreBuilder(subscriber, catalog, origin, path, remote);
    }
 }

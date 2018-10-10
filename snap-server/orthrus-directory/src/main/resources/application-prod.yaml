@@ -1,2 +1,5 @@
 server:
   directory: /apps/directory/current
+
+tuple:
+   remote: @tuple.remote@  

@@ -1,11 +1,13 @@
 package io.orthrus.store.tuple;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import jetbrains.exodus.entitystore.PersistentEntityStore;
 
+import com.zuooh.tuple.Tuple;
 import com.zuooh.tuple.TupleListener;
 import com.zuooh.tuple.TuplePublisher;
 import com.zuooh.tuple.grid.Catalog;
@@ -29,7 +31,8 @@ class PersistentStoreBuilder {
    }
 
    public TupleStore create(PersistentEntityStore store, String[] key, String name) {
-      TupleListener listener = new PersistentListener(store, key, name);
+      TupleListener listener = new PersistentListener(store, publisher, key, name);
+      PersistentStore adapter = new PersistentStore(store, listener, key, name);
       Map<String, String> predicates = new LinkedHashMap<>();
       Query query = new Query(origin, predicates);
       
@@ -37,6 +40,11 @@ class PersistentStoreBuilder {
          predicates.put(name, "*");
          subscriber.subscribe(listener, query);
       }
-      return new PersistentStore(store, publisher, listener, key, name);
+      List<Tuple> tuples = adapter.findAll();
+      
+      for(Tuple tuple : tuples) {
+         publisher.publish(tuple); // fill the grid
+      }
+      return adapter;
    }
 }

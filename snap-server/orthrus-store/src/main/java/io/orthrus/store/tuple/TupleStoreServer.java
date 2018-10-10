@@ -4,6 +4,7 @@ import io.orthrus.common.AnnotationPresentScanner;
 import io.orthrus.common.ClassPathScanner;
 import io.orthrus.store.Entity;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.List;
 import java.util.Set;
@@ -20,10 +21,10 @@ public class TupleStoreServer {
    private final ClassPathScanner scanner;
    private final CatalogBuilder builder;
    
-   public TupleStoreServer(List<SubscriptionListener> listeners, String packages, String name, String remote, int port) {
+   public TupleStoreServer(List<SubscriptionListener> listeners, File path, String packages, String name, String remote, int port) {
       this.scanner = new AnnotationPresentScanner(Entity.class, "", packages);
       this.builder = new CatalogBuilder(listeners, port);
-      this.subscriber = new TupleStoreSubscriber(name, remote, port);
+      this.subscriber = new TupleStoreSubscriber(path, name, remote, port);
    }
    
    @SneakyThrows
