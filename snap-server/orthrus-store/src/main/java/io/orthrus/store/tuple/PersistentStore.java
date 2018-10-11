@@ -37,9 +37,9 @@ class PersistentStore implements TupleStore {
    }
 
    @Override
-   public boolean delete(String name, Comparable<?> value) {
+   public boolean delete(String column, Comparable<?> value) {
       return store.computeInTransaction((transaction) -> {
-         EntityIterable iterable = transaction.find(name, key[0], value);
+         EntityIterable iterable = transaction.find(name, column, value);
          
          for(Entity entity : iterable) {
             entity.delete();
@@ -68,7 +68,7 @@ class PersistentStore implements TupleStore {
    @Override
    public Tuple find(String column, Comparable<?> value) {
       return store.computeInReadonlyTransaction((transaction) -> {
-         EntityIterable iterable = transaction.find(name, key[0], value);
+         EntityIterable iterable = transaction.find(name, column, value);
          
          if(!iterable.isEmpty()) {
             Map<String, Object> attributes = Maps.newTreeMap();
