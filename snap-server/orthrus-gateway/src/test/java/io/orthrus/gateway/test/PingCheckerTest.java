@@ -27,8 +27,8 @@ public class PingCheckerTest extends TestCase {
 
    @SneakyThrows
    public void testSecureConnection() {
-      checkWithSocket("www.orthrus.io", 443);
-      checkWithConnection("www.orthrus.io", 443);
+      checkWithSocket("www.google.com", 443);
+      checkWithConnection("www.google.com", 443);
    }
    
    @SneakyThrows
