@@ -7,7 +7,10 @@ login:
    url:
       directory: http://prodapp1:8383/ 
    token-store:
-      path: /apps/rp/current/etc/www.orthrus.io.pfx 
+      path: /var/creds/www.orthrus.io.pfx 
+ 
+mail:
+   credentials: /var/creds/smtp.properties 
       
 tuple:
    remote: @tuple.remote@        

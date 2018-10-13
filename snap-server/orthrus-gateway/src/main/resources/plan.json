@@ -17,7 +17,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "${root}/etc/www.authrus.com.pfx",
+        "path": "/var/creds/www.authrus.com.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [
@@ -98,7 +98,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "${root}/etc/www.orthrus.io.pfx",
+        "path": "/var/creds/www.orthrus.io.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [

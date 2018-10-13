@@ -6,7 +6,7 @@ gateway:
   domain: www.orthrus.io
   resources: ${server.directory}
   plan: ${server.directory}/etc/plan.json  
-  key-store: ${server.directory}/etc/${gateway.domain}.pfx     
+  key-store: /var/creds/${gateway.domain}.pfx     
 
 logging:
   level:

@@ -15,6 +15,7 @@ public class LoginService {
    private final LoginClient client;
    private final String directory;
    private final String base;
+   private final String from;
 
    public Login login(String email, String password, String redirect, String mode) {
       AccessRequest request = service.createRequest(email, redirect);
@@ -23,7 +24,7 @@ public class LoginService {
       
       if(login.isMail()) {
          String message = login.getMessage();
-         client.login(email, directory, message);
+         client.login(email, from, directory, message);
       }
       return login;
    }

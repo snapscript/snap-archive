@@ -10,6 +10,7 @@ jmx:
    port: 5577
    
 login:
+   email: admin@authrus.com
    url:
       directory: http://localhost:8383/
       base: https://www.orthrus.io/ 

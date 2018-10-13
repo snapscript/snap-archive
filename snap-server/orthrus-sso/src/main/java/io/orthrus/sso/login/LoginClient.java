@@ -32,7 +32,7 @@ public class LoginClient {
       return registered;
    }
    
-   public User login(String email, String directory, String message) {
+   public User login(String email, String from, String directory, String message) {
       User user = builder.baseUrl(directory)
          .build()
          .method(HttpMethod.GET)
@@ -42,7 +42,7 @@ public class LoginClient {
          .retry(4)
          .block();
       
-      service.send("admin@orthrus.com", email, "Access Token", message);
+      service.send(from, email, "Access Token", message);
       return user;
    }
 }
