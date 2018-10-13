@@ -22,6 +22,6 @@ public class MailService {
       MailRecipient destination = new MailRecipient(MailRecipientType.TO, to);
       MailMessage message = new MailMessage(MailType.TEXT, source, destination, subject, body);
    
-      //client.sendMessage(message);
+      client.sendMessage(message);
    }
 }

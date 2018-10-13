@@ -1,6 +1,8 @@
 /target/
 certificate
 log
+smtp.properties
+*.pfx
 .settings
 .classpath
 .project

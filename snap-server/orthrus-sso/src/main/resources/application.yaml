@@ -29,7 +29,9 @@ tuple:
    port: 2${server.port}         
             
 mail:
-   host: localhost
+   credentials: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso/src/main/resources/smtp.properties
+   host: email-smtp.eu-west-1.amazonaws.com
+   port: 465
 
 logging:
   level:
