@@ -1,109 +1,150 @@
 hterm.defaultStorage = new lib.Storage.Memory();
 
-var t = new hterm.Terminal("cloudterm");
-
-t.getPrefs().set("send-encoding", "utf-8");
-t.getPrefs().set("receive-encoding", "utf-8");
-
-// t.getPrefs().set("use-default-window-copy", true);
-t.getPrefs().set("clear-selection-after-copy", true);
-t.getPrefs().set("copy-on-select", true);
-t.getPrefs().set("ctrl-c-copy", true);
-t.getPrefs().set("ctrl-v-paste", true);
-// t.getPrefs().set("cursor-color", "black");
-// t.getPrefs().set("background-color", "white");
-// t.getPrefs().set("font-size", 12);
-// t.getPrefs().set("foreground-color", "black");
-// t.getPrefs().set("cursor-blink", false);
-// t.getPrefs().set("scrollbar-visible", true);
-// t.getPrefs().set("scroll-wheel-move-multiplier", 0.1);
-// t.getPrefs().set("user-css", "/afx/resource/?p=css/hterm.css");
-t.getPrefs().set("enable-clipboard-notice", true);
-
-t.onTerminalReady = function () {
-
-    app.onTerminalInit();
-
-    var io = t.io.push();
-
-    io.onVTKeystroke = function (str) {
-        app.onCommand(str);
-    };
-
-    io.sendString = io.onVTKeystroke;
-
-    io.onTerminalResize = function (columns, rows) {
-        app.resizeTerminal(columns, rows);
-    };
-
-    t.installKeyboard();
-    app.onTerminalReady();
-
+var terminal = new hterm.Terminal("cloudterm");
+var session = null; // this is a connected web socket	
+var ready = false;
+var init = false;
+var dimension = null;
+var application = {
+	
+	onStart: function(socket) {
+		session = socket; // we are now connected
+		
+		if(init) {
+			onfTerminalInit();
+		}
+		if(ready) {
+			onTerminalReady();
+		}
+		if(dimension) {
+			resizeTerminal(dimension.columns, dimension.rows);
+		}
+	},
+    
+	onTerminalInit: function() {
+        if(session) {
+        	session.send(action("TERMINAL_INIT"));
+        }
+        init = true;
+    },
+    
+    onCommand: function(command) {
+    	if(session) {
+    		session.send(action("TERMINAL_COMMAND", {
+	            command
+	        }));
+    	} 
+    },
+    
+    resizeTerminal: function(columns, rows) {
+        if(session) {
+        	dimension = {
+        	    columns: columns,
+        	    rows: rows
+        	};
+        	session.send(action("TERMINAL_RESIZE", {
+	            columns, rows
+	        }));
+        }
+    },
+    
+    onTerminalReady: function() {
+        if(session) {
+        	session.send(action("TERMINAL_READY"));
+        }
+        ready = true;
+    }
 };
 
-
-let protocol = "ws://";
-
-if (window.document.location.protocol.indexOf("https") == 0) {
-	protocol = "wss://";
-}
-let segments = window.document.location.pathname.split("/");
-let address = protocol + location.host;
-
-if(segments.length == 3) {
-	address += "/" + segments[1];
-}
-
-address += "/session"
-
-let ws = new WebSocket(address);
-
-t.decorate(document.querySelector('#terminal'));
-
-ws.onopen = () => {
-    t.decorate(document.querySelector('#terminal'));
-    t.showOverlay("Connection established", 1000);
-}
-
-ws.onerror = () => {
-    t.showOverlay("Connection error", 3000);
-}
-
-ws.onclose = () => {
-    t.showOverlay("Connection closed", 3000);
-}
-
-ws.onmessage = (e) => {
-    let data = JSON.parse(e.data);
-    switch (data.type) {
-        case "TERMINAL_PRINT":
-            t.io.print(data.text);
-    }
-}
+setPreferences();
+openSocket();
 
 function action(type, data) {
-    let action = Object.assign({
+    var action = Object.assign({
         type
     }, data);
 
     return JSON.stringify(action);
 }
 
-let app = {
-    onTerminalInit() {
-        ws.send(action("TERMINAL_INIT"));
-    },
-    onCommand(command) {
-        ws.send(action("TERMINAL_COMMAND", {
-            command
-        }));
-    },
-    resizeTerminal(columns, rows) {
-        ws.send(action("TERMINAL_RESIZE", {
-            columns, rows
-        }));
-    },
-    onTerminalReady() {
-        ws.send(action("TERMINAL_READY"));
-    }
-};
+function setPreferences() {
+	terminal.getPrefs().set("send-encoding", "utf-8");
+	terminal.getPrefs().set("receive-encoding", "utf-8");
+	
+	// terminal.getPrefs().set("use-default-window-copy", true);
+	terminal.getPrefs().set("clear-selection-after-copy", true);
+	terminal.getPrefs().set("copy-on-select", true);
+	terminal.getPrefs().set("ctrl-c-copy", true);
+	terminal.getPrefs().set("ctrl-v-paste", true);
+	// terminal.getPrefs().set("cursor-color", "black");
+	// terminal.getPrefs().set("background-color", "white");
+	// terminal.getPrefs().set("font-size", 12);
+	// terminal.getPrefs().set("foreground-color", "black");
+	// terminal.getPrefs().set("cursor-blink", false);
+	// terminal.getPrefs().set("scrollbar-visible", true);
+	// terminal.getPrefs().set("scroll-wheel-move-multiplier", 0.1);
+	// terminal.getPrefs().set("user-css", "/afx/resource/?p=css/hterm.css");
+	terminal.getPrefs().set("enable-clipboard-notice", true);
+	
+	terminal.onTerminalReady = function () {
+	
+	    application.onTerminalInit();
+	
+	    var io = terminal.io.push();
+	
+	    io.onVTKeystroke = function (str) {
+	        application.onCommand(str);
+	    };
+	
+	    io.sendString = io.onVTKeystroke;
+	
+	    io.onTerminalResize = function (columns, rows) {
+	        application.resizeTerminal(columns, rows);
+	    };
+	
+	    terminal.installKeyboard();
+	    application.onTerminalReady();
+	
+	}
+}
+
+function openSocket() {
+	var protocol = "ws://";
+	
+	if (window.document.location.protocol.indexOf("https") == 0) {
+		protocol = "wss://";
+	}
+	var segments = window.document.location.pathname.split("/");
+	var address = protocol + location.host;
+	
+	if(segments.length == 3) {
+		address += "/" + segments[1];
+	}
+	
+	address += "/session";
+	var socket = new WebSocket(address);
+	
+	terminal.decorate(document.querySelector('#terminal'));
+	
+	socket.onopen = () => {
+		application.onStart(socket);
+		terminal.decorate(document.querySelector('#terminal'));
+	    terminal.showOverlay("Connection established", 1000);
+	}
+	
+	socket.onerror = () => {
+	    terminal.showOverlay("Connection error", 3000);
+	}
+	
+	socket.onclose = () => {
+	    terminal.showOverlay("Connection closed", 3000);
+	}
+	
+	socket.onmessage = (e) => {
+	    var data = JSON.parse(e.data);
+	    switch (data.type) {
+	        case "TERMINAL_PRINT":
+	            terminal.io.print(data.text);
+	    }
+	}
+}

@@ -1,2 +1,5 @@
+server:
+  directory: /apps/terminal/current
+
 terminal:
    host: @terminal.host@   

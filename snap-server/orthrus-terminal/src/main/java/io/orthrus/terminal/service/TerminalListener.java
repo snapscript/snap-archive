@@ -1,6 +1,5 @@
 package io.orthrus.terminal.service;
 
-
 public interface TerminalListener {
    void onTerminalInit();
    void onTerminalReady();
