@@ -5,10 +5,8 @@ server:
   packages: io.orthrus.gateway   
       
 gateway:   
-  domain: www.orthrus.io
   resources: ${server.directory} 
   plan: ${server.directory}/src/main/resources/plan.json   
-  key-store: ${server.directory}/certificate/${gateway.domain}/${gateway.domain}.pfx  
 
 jmx:
    login: admin

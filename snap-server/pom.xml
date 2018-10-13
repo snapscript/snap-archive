@@ -37,6 +37,14 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
@@ -52,6 +60,7 @@
     <module>orthrus-store</module>
     <module>orthrus-rest</module>
     <module>orthrus-directory</module>
+        <module>orthrus-terminal</module>
     <module>orthrus-domain</module>
     <module>orthrus-sso</module>
     <module>orthrus-gateway</module>

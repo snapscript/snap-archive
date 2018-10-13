@@ -12,7 +12,7 @@ jmx:
 login:
    url:
       directory: http://localhost:8383/
-      base: https://orthrus.io/ 
+      base: https://www.orthrus.io/ 
    token-store:
       type: PKCS12   
       path: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/certificate/www.orthrus.io/www.orthrus.io.pfx 

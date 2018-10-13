@@ -1,28 +1,104 @@
 {
   "attributes": {
-    "root": "${gateway.resources}",
-    "domain": "${gateway.domain}",
-    "key-store": "${gateway.key-store}"
+    "root": "${gateway.resources}"
   },
   "hosts": [
-    {
-      "name": "orthrus",
-      "address": [
-        "http://${domain}/",
-        "https://${domain}/"
-      ],
+      {
+      "name": "www.authrus.com",
+      "port": 8888,
       "static-resources": {
         "directory": "${root}",
         "path": "/static/.*"
       },
       "access-log": {
-        "file": "${root}/log/access.log",
+        "file": "${root}/log/www.authrus.com.log",
         "format": "%T [%P] %h [%t] '%r' %s %b %{Host} '%{User-Agent}' %{Content-Type} @{Content-Type} @{Content-Encoding} %X @{X-Time} ms %d ms",
         "threshold": 1000000
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "${key-store}",
+        "path": "${root}/etc/www.authrus.com.pfx",
+        "password": "password12",
+        "protocols": [],
+        "cipher-suites": [
+          "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+          "TLS_RSA_WITH_AES_128_CBC_SHA256",
+          "TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256",
+          "TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256",
+          "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256",
+          "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+          "TLS_RSA_WITH_AES_128_CBC_SHA",
+          "TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA",
+          "TLS_ECDH_RSA_WITH_AES_128_CBC_SHA",
+          "TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
+          "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA",
+          "TLS_ECDHE_RSA_WITH_RC4_128_SHA",
+          "SSL_RSA_WITH_RC4_128_SHA",
+          "TLS_ECDH_ECDSA_WITH_RC4_128_SHA",
+          "TLS_ECDH_RSA_WITH_RC4_128_SHA",
+          "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA",
+          "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA",
+          "SSL_RSA_WITH_3DES_EDE_CBC_SHA",
+          "TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA",
+          "TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA",
+          "SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA",
+          "SSL_RSA_WITH_RC4_128_MD5",
+          "TLS_EMPTY_RENEGOTIATION_INFO_SCSV"
+        ]
+      },
+      "routes": [
+        {
+          "route-patterns": [
+            "http.*://www.authrus.com/.*"
+          ],
+          "route-rules": [
+            {
+              "pattern": "/index.html",
+              "template": "/index"
+            },
+            {
+              "pattern": "/about.html",
+              "template": "/about"
+            },
+            {
+              "pattern": "/contact.html",
+              "template": "/contact"
+            }
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000,
+              "ping-headers": {
+                "X-Ping-Request": "true"
+              }
+            },
+            "servers": [
+              "http://localhost:4321/",
+              "http://localhost:4321/"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "www.orthrus.io",
+      "port": 443,
+      "static-resources": {
+        "directory": "${root}",
+        "path": "/static/.*"
+      },
+      "access-log": {
+        "file": "${root}/log/www.orthrus.io.log",
+        "format": "%T [%P] %h [%t] '%r' %s %b %{Host} '%{User-Agent}' %{Content-Type} @{Content-Type} @{Content-Encoding} %X @{X-Time} ms %d ms",
+        "threshold": 1000000
+      },
+      "key-store": {
+        "type": "PKCS12",
+        "path": "${root}/etc/www.orthrus.io/www.orthrus.io.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [
@@ -55,17 +131,17 @@
       },
       "redirects": [
         {
-          "match-pattern": "http://${domain}/(.*)",
-          "ignore-pattern": "http://${domain}/status",
-          "template": "https://${domain}/%{1}"
+          "match-pattern": "http://www.orthrus.io/(.*)",
+          "ignore-pattern": "http://www.orthrus.io/status",
+          "template": "https://www.orthrus.io/%{1}"
         },
         {
-          "match-pattern": "https://${domain}/",
-          "template": "https://${domain}/index"
+          "match-pattern": "https://www.orthrus.io/",
+          "template": "https://www.orthrus.io/index"
         },
         {
-          "match-pattern": "https://${domain}/(directory|directory/)",
-          "template": "https://${domain}/directory/listPeople"
+          "match-pattern": "https://www.orthrus.io/(directory|directory/)",
+          "template": "https://www.orthrus.io/directory/listPeople"
         },
         {
           "cookie-rule": {
@@ -83,15 +159,14 @@
               "expiry": 20000
             }
           },
-          "match-pattern": "https://${domain}/(directory/.*|hub/.*|admin/.*)",
-          "ignore-pattern": "https://${domain}/login/.*",
-          "template": "https://${domain}/login?redirect=%{1}"
+          "match-pattern": "https://www.orthrus.io/(directory/.*|hub/.*|admin/.*|prodapp1.*|prodapp2.*)",
+          "ignore-pattern": "https://www.orthrus.io/login/.*",
+          "template": "https://www.orthrus.io/login?redirect=%{1}"
         }
       ],
       "routes": [
         {
           "route-patterns": [
-            "http.*://orthrus.io/login/.*",
             "http.*://www.orthrus.io/login/.*"
           ],
           "route-rules": [
@@ -99,7 +174,7 @@
               "pattern": "/login/(.*)",
               "template": "/v1/%{1}"
             }
-          ],      
+          ],
           "server-group": {
             "buffer": 8192,
             "selector": "master-slave",
@@ -115,7 +190,38 @@
         },
         {
           "route-patterns": [
-            "http.*://orthrus.io/hub/.*",
+            "http.*://www.orthrus.io/prodapp1/.*"
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "selector": "master-slave",
+            "health-check": {
+              "ping-path": "/prodapp1/status",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp1:8899/"
+            ]
+          }
+        }, 
+        {
+          "route-patterns": [
+            "http.*://www.orthrus.io/prodapp2/.*"
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "selector": "master-slave",
+            "health-check": {
+              "ping-path": "/prodapp2/status",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp2:8899/"
+            ]
+          }
+        },                           
+        {
+          "route-patterns": [
             "http.*://www.orthrus.io/hub/.*"
           ],
           "server-group": {
@@ -131,7 +237,6 @@
         },
         {
           "route-patterns": [
-            "http.*://orthrus.io/directory/.*",
             "http.*://www.orthrus.io/directory/.*"
           ],
           "server-group": {
@@ -147,7 +252,6 @@
         },
         {
           "route-patterns": [
-            "http.*://orthrus.io/admin/.*",
             "http.*://www.orthrus.io/admin/.*"
           ],
           "route-rules": [
@@ -170,7 +274,6 @@
         },
         {
           "route-patterns": [
-            "http.*://orthrus.io/.*",
             "http.*://www.orthrus.io/.*"
           ],
           "route-rules": [
