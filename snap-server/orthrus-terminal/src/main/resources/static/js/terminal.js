@@ -41,7 +41,24 @@ t.onTerminalReady = function () {
 
 };
 
-let ws = new WebSocket("ws://" + location.host + "/terminal");
+
+let protocol = "ws://";
+
+if (window.document.location.protocol.indexOf("https") == 0) {
+	protocol = "wss://";
+}
+let segments = window.document.location.pathname.split("/");
+let address = protocol + location.host;
+
+if(segments.length == 3) {
+	address += "/" + segments[1];
+}
+
+address += "/session"
+
+let ws = new WebSocket(address);
+
+t.decorate(document.querySelector('#terminal'));
 
 ws.onopen = () => {
     t.decorate(document.querySelector('#terminal'));

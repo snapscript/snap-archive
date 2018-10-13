@@ -1,4 +1,4 @@
-package com.kodedu.cloudterm.helper;
+package io.orthrus.terminal.service;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by usta on 12.09.2016.
  */
-public class IOHelper {
+public class TerminalHelper {
 
     public static void close(Closeable... closables) {
         for (Closeable closable : closables) {
@@ -40,7 +40,7 @@ public class IOHelper {
 
             if (Files.notExists(nativePath)) {
                 Files.createDirectories(nativePath.getParent());
-                InputStream inputStream = IOHelper.class.getResourceAsStream("/" + nativeFile);
+                InputStream inputStream = TerminalHelper.class.getResourceAsStream("/" + nativeFile);
                 Files.copy(inputStream, nativePath);
                 close(inputStream);
             }

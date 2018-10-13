@@ -18,10 +18,7 @@ import org.glassfish.jersey.simple.SimpleContainer;
 import org.glassfish.jersey.simple.SimpleTraceAnalyzer;
 import org.simpleframework.http.core.Container;
 import org.simpleframework.http.core.ContainerSocketProcessor;
-import org.simpleframework.http.socket.service.DirectRouter;
-import org.simpleframework.http.socket.service.Router;
 import org.simpleframework.http.socket.service.RouterContainer;
-import org.simpleframework.http.socket.service.Service;
 import org.simpleframework.transport.SocketProcessor;
 import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
@@ -29,13 +26,13 @@ import org.simpleframework.transport.connect.SocketConnection;
 public class ContainerManagerBuilder {
 
    private final ContentHandlerMatcher matcher;
+   private final ServiceRouter router;
    private final ServerName server;
-   private final Router router;
    
-   public ContainerManagerBuilder(ContentHandlerMatcher matcher, Service service, String name) {
-      this.router = new DirectRouter(service);
+   public ContainerManagerBuilder(ContentHandlerMatcher matcher, ServiceRouter router, String name) {
       this.server = new ServerName(name);
       this.matcher = matcher;
+      this.router = router;
    }
    
    @SneakyThrows

@@ -3,7 +3,7 @@
     "root": "${gateway.resources}"
   },
   "hosts": [
-      {
+    {
       "name": "www.authrus.com",
       "port": 8888,
       "static-resources": {
@@ -86,7 +86,7 @@
     },
     {
       "name": "www.orthrus.io",
-      "port": 443,
+      "port": 7777,
       "static-resources": {
         "directory": "${root}",
         "path": "/static/.*"
@@ -98,7 +98,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "${root}/etc/www.orthrus.pfx",
+        "path": "${root}/etc/www.orthrus.io.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [
@@ -192,34 +192,54 @@
           "route-patterns": [
             "http.*://www.orthrus.io/prodapp1/.*"
           ],
+          "route-rules": [
+            {
+              "pattern": "/prodapp1/terminal",
+              "template": "/index.html"
+            },           
+            {
+              "pattern": "/prodapp1/(.*)",
+              "template": "/%{1}"
+            }
+          ],
           "server-group": {
             "buffer": 8192,
             "selector": "master-slave",
             "health-check": {
-              "ping-path": "/prodapp1/status",
+              "ping-path": "/status",
               "ping-frequency": 5000
             },
             "servers": [
               "http://prodapp1:8899/"
             ]
           }
-        }, 
+        },
         {
           "route-patterns": [
             "http.*://www.orthrus.io/prodapp2/.*"
+          ],
+          "route-rules": [
+            {
+              "pattern": "/prodapp2/terminal",
+              "template": "/index.html"
+            },          
+            {
+              "pattern": "/prodapp2/(.*)",
+              "template": "/%{1}"
+            }
           ],
           "server-group": {
             "buffer": 8192,
             "selector": "master-slave",
             "health-check": {
-              "ping-path": "/prodapp2/status",
+              "ping-path": "/status",
               "ping-frequency": 5000
             },
             "servers": [
               "http://prodapp2:8899/"
             ]
           }
-        },                           
+        },
         {
           "route-patterns": [
             "http.*://www.orthrus.io/hub/.*"

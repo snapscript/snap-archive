@@ -1,6 +1,8 @@
 package io.orthrus.rest;
 
 import io.orthrus.rest.container.ContainerManager;
+import io.orthrus.rest.container.ServiceRegistry;
+import io.orthrus.rest.container.ServiceRouter;
 
 import java.io.File;
 
@@ -20,6 +22,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 public class ResourceServerConfiguration {
 
    private final ResourceServer server;
+   private final ServiceRouter router;
    
    public ResourceServerConfiguration(
          @Value("${server.packages:io.orthrus.rest}") String packages,
@@ -28,7 +31,13 @@ public class ResourceServerConfiguration {
          @Value("${server.port}") int port,
          @Value("${server.swagger.enabled:true}") boolean swagger)
    {
-      this.server = new ResourceServer(packages, name, directory, port, swagger);
+      this.router = new ServiceRouter();
+      this.server = new ResourceServer(router, packages, name, directory, port, swagger);
+   }
+   
+   @Bean
+   public ServiceRegistry serviceRegistry() {
+      return router;
    }
    
    @Bean

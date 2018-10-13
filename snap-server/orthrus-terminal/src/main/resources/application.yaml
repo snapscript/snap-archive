@@ -1,2 +1,13 @@
 server:
-   port: 8899
+  name: terminal
+  directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-terminal
+  port: 8899
+  packages: io.orthrus.terminal,io.orthrus.store     
+   
+jmx:
+   login: admin
+   password: password12
+   port: 9955   
+   
+terminal:
+   host: localhost   

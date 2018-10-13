@@ -3,6 +3,7 @@ package io.orthrus.rest;
 import io.orthrus.rest.container.ContainerManager;
 import io.orthrus.rest.container.ContainerManagerBuilder;
 import io.orthrus.rest.container.DependencyManager;
+import io.orthrus.rest.container.ServiceRouter;
 import io.orthrus.rest.content.ContentHandlerMatcher;
 import io.orthrus.rest.content.FileContentHandlerMatcher;
 
@@ -21,10 +22,10 @@ public class ResourceServer {
    private final DependencyManager manager;
    private final int port;
    
-   public ResourceServer(String packages, String name, File directory, int port, boolean swagger) {
+   public ResourceServer(ServiceRouter router, String packages, String name, File directory, int port, boolean swagger) {
       this.matcher = new FileContentHandlerMatcher(directory);
       this.manager = new DependencyManager(packages, swagger);
-      this.builder = new ContainerManagerBuilder(matcher, null, name);
+      this.builder = new ContainerManagerBuilder(matcher, router, name);
       this.port = port;
    }
 
