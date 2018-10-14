@@ -42,7 +42,7 @@ public class LoginClient {
          .retry(4)
          .block();
       
-      service.send(from, email, "Access Token", message);
+      service.send(from, email, "[Authrus] Access Token", message);
       return user;
    }
 }
