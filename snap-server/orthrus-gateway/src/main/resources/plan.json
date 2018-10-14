@@ -1,6 +1,7 @@
 {
   "attributes": {
-    "root": "${gateway.resources}"
+    "root": "${gateway.resources}",
+    "creds": "${gateway.creds}"
   },
   "hosts": [
     {
@@ -17,7 +18,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "/var/creds/www.authrus.com.pfx",
+        "path": "${creds}/www.authrus.com/www.authrus.com.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [
@@ -260,7 +261,7 @@
       },
       "key-store": {
         "type": "PKCS12",
-        "path": "/var/creds/www.orthrus.io.pfx",
+        "path": "${creds}/www.orthrus.io/www.orthrus.io.pfx",
         "password": "password12",
         "protocols": [],
         "cipher-suites": [

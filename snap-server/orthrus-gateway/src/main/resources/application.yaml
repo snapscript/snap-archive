@@ -7,6 +7,7 @@ server:
       
 gateway:   
   resources: ${server.directory} 
+  creds: ${gateway.resources}/certificate  
   plan: ${server.directory}/src/main/resources/plan.json   
 
 jmx:
@@ -14,6 +15,8 @@ jmx:
    password: password12
    port: 9989
    
+zookeeper:   
+   hosts: localhost:2181     
 
 logging:
   level:

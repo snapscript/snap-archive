@@ -5,6 +5,7 @@ server:
 gateway:   
   debug: false
   domain: www.orthrus.io
+  creds: /var/creds    
   resources: ${server.directory}
   plan: ${server.directory}/etc/plan.json  
   key-store: /var/creds/${gateway.domain}.pfx     
