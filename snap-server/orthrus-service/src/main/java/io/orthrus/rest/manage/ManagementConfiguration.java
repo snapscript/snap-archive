@@ -1,4 +1,4 @@
-package io.orthrus.jmx;
+package io.orthrus.rest.manage;
 
 import lombok.SneakyThrows;
 
@@ -18,7 +18,6 @@ import com.zuooh.common.manage.spring.ApplicationContextIntrospector;
 import com.zuooh.common.manage.spring.ApplicationInfo;
 
 @Configuration
-@ComponentScan(basePackageClasses = ManagementConfiguration.class)
 public class ManagementConfiguration {
    
    private final ConnectorServerFactoryBean factory;

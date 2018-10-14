@@ -1,4 +1,4 @@
-package io.orthrus.jmx;
+package io.orthrus.rest.manage;
 
 import java.util.Map;
 

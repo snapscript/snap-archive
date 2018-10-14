@@ -1,4 +1,4 @@
-package io.orthrus.jmx;
+package io.orthrus.rest.manage;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;

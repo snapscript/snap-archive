@@ -1,4 +1,4 @@
-package io.orthrus.jmx;
+package io.orthrus.rest.manage;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

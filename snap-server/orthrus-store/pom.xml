@@ -26,7 +26,7 @@
     </dependency>
     <dependency>
       <groupId>io.orthrus</groupId>
-      <artifactId>orthrus-rest</artifactId>
+      <artifactId>orthrus-service</artifactId>
       <version>sandbox-SNAPSHOT</version>
     </dependency>
     <dependency>

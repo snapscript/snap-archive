@@ -21,7 +21,7 @@
   <dependencies>
     <dependency>
       <groupId>io.orthrus</groupId>
-      <artifactId>orthrus-rest</artifactId>
+      <artifactId>orthrus-service</artifactId>
       <version>sandbox-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -32,11 +32,6 @@
     <dependency>
       <groupId>io.orthrus</groupId>
       <artifactId>orthrus-store</artifactId>
-      <version>sandbox-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>io.orthrus</groupId>
-      <artifactId>orthrus-jmx</artifactId>
       <version>sandbox-SNAPSHOT</version>
     </dependency>
     <dependency>

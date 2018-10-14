@@ -44,11 +44,10 @@
 
   <modules>
     <module>orthrus-common</module>
-    <module>orthrus-jmx</module>
     <module>orthrus-store</module>
-    <module>orthrus-rest</module>
+    <module>orthrus-service</module>
     <module>orthrus-directory</module>
-        <module>orthrus-terminal</module>
+    <module>orthrus-terminal</module>
     <module>orthrus-domain</module>
     <module>orthrus-sso</module>
     <module>orthrus-gateway</module>

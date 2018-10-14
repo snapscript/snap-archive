@@ -2,6 +2,7 @@ package io.orthrus.rest.container;
 
 import io.orthrus.common.AnnotationPresentScanner;
 import io.orthrus.common.ClassPathScanner;
+import io.orthrus.rest.manage.ManagementResource;
 import io.orthrus.rest.registry.RegistryResource;
 import io.orthrus.rest.status.PingResource;
 import io.orthrus.rest.swagger.SwaggerResource;
@@ -29,6 +30,7 @@ public class ResourceScanner {
       
       types.add(PingResource.class);
       types.add(RegistryResource.class);
+      types.add(ManagementResource.class);
       
       if(swagger) {
          types.add(SwaggerResource.class);
