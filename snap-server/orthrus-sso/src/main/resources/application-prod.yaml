@@ -10,6 +10,9 @@ login:
  
 mail:
    credentials: /var/creds/smtp.properties 
+    
+zookeeper:   
+   hosts: prodapp1:2181,prodapp2:2181      
       
 tuple:
    remote: @tuple.remote@        

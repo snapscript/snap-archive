@@ -15,7 +15,7 @@ terminal:
    
 zookeeper:   
    hosts: localhost:${zookeeper.clientPort}
-   dataDir: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-terminal/data
+   dataDir: ${server.directory}/data
    clientPort: 2181
    maxClientCnxns: 0   
    initLimit: 5

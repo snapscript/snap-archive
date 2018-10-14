@@ -27,7 +27,7 @@ public class Registry {
       String path = String.format("/%s", environment);
 
       return client.getNodes(path)
-         .stream()
+         .parallelStream()
          .map(ZooKeeperNode::getPath)
          .flatMap(parent -> client.getNodes(parent).stream())
          .map(node -> {

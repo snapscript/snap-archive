@@ -8,7 +8,10 @@ gateway:
   creds: /var/creds    
   resources: ${server.directory}
   plan: ${server.directory}/etc/plan.json  
-  key-store: /var/creds/${gateway.domain}.pfx     
+  key-store: /var/creds/${gateway.domain}/${gateway.domain}.pfx
+       
+zookeeper:   
+   hosts: prodapp1:2181,prodapp2:2181    
 
 logging:
   level:

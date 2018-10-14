@@ -24,7 +24,7 @@ public class ManagementClient {
    
    public List<ManagementData> getData() {
       List<RegistryNode> nodes = service.getNodes();
-      return nodes.stream()
+      return nodes.parallelStream()
             .map(node -> {
                try {
                   String address = node.getAddress();
