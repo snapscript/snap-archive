@@ -3,7 +3,7 @@ server:
   environment: local
   directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-terminal
   port: 8899
-  packages: io.orthrus.terminal,io.orthrus.rest     
+  packages: io.orthrus.terminal   
    
 jmx:
    login: admin

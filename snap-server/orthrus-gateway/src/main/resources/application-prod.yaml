@@ -1,4 +1,5 @@
 server:
+  environment: prod
   directory: /apps/rp/current  
       
 gateway:   

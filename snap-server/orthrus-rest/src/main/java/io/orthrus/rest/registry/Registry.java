@@ -60,7 +60,7 @@ public class Registry {
       String path = String.format("/%s/%s/%s", environment, host, name);
       
       client.deleteNode(path);
-      client.addEphemeralNode(path, node);
+      client.addNode(path, node);
       
       return node;
    }

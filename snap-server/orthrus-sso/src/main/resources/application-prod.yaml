@@ -1,7 +1,6 @@
 server:
+  environment: prod
   directory: /apps/sso/current
-  port: 7070
-  packages: io.orthrus.sso  
       
 login:
    url:

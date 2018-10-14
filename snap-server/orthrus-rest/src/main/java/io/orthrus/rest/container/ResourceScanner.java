@@ -2,6 +2,7 @@ package io.orthrus.rest.container;
 
 import io.orthrus.common.AnnotationPresentScanner;
 import io.orthrus.common.ClassPathScanner;
+import io.orthrus.rest.registry.RegistryResource;
 import io.orthrus.rest.status.PingResource;
 import io.orthrus.rest.swagger.SwaggerResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
@@ -26,8 +27,10 @@ public class ResourceScanner {
    public Set<Class<?>> scan(boolean swagger) {
       Set<Class<?>> types = scanner.scan();
       
+      types.add(PingResource.class);
+      types.add(RegistryResource.class);
+      
       if(swagger) {
-         types.add(PingResource.class);
          types.add(SwaggerResource.class);
          types.add(SwaggerSerializers.class);
       } else {
