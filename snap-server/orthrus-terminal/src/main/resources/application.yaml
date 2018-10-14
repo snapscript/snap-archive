@@ -1,8 +1,9 @@
 server:
   name: terminal
+  environment: local
   directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-terminal
   port: 8899
-  packages: io.orthrus.terminal,io.orthrus.store     
+  packages: io.orthrus.terminal,io.orthrus.rest     
    
 jmx:
    login: admin
@@ -11,3 +12,9 @@ jmx:
    
 terminal:
    host: localhost   
+   
+zookeeper:   
+   hosts: localhost:${zookeeper.clientPort}
+   dataDir: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-terminal/data
+   clientPort: 2181
+   maxClientCnxns: 0   

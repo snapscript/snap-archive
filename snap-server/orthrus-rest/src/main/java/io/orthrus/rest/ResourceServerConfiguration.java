@@ -3,6 +3,7 @@ package io.orthrus.rest;
 import io.orthrus.rest.container.ContainerManager;
 import io.orthrus.rest.container.ServiceRegistry;
 import io.orthrus.rest.container.ServiceRouter;
+import io.orthrus.rest.registry.RegistryConfiguration;
 
 import java.io.File;
 
@@ -14,10 +15,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 @Slf4j
 @Configuration
+@Import(RegistryConfiguration.class)
 @ComponentScan(basePackageClasses = ResourceServerConfiguration.class)
 public class ResourceServerConfiguration {
 

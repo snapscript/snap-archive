@@ -1,5 +1,6 @@
 server:
   name: sso
+  environment: local
   directory: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-sso
   port: 7070
   packages: io.orthrus.sso,io.orthrus.store     

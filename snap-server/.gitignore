@@ -1,6 +1,7 @@
 /target/
 certificate
 log
+data
 smtp.properties
 *.pfx
 .settings
