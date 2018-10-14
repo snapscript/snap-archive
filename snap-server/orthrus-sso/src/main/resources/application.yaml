@@ -13,7 +13,7 @@ login:
    email: admin@authrus.com
    url:
       directory: http://localhost:8383/
-      base: https://www.orthrus.io/ 
+      base: https://www.authrus.com/ 
    token-store:
       type: PKCS12   
       path: C:/Work/development/snapscript/snap-archive/snap-server/orthrus-gateway/certificate/www.orthrus.io/www.orthrus.io.pfx 

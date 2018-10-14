@@ -2,17 +2,18 @@ package io.orthrus.sso.login;
 
 import io.orthrus.sso.access.AccessRequest;
 
-import java.net.URI;
-
 public enum LoginType {
    OTP {
       @Override
       public Login generateLogin(AccessRequest request, String base) {
          int code = request.getCode();
          String address = String.format("%s/login/access-code", base);
-         String normal = address.replace("//login/", "/login/");
+         String redirect = String.format("%s/mail-sent", base);
          
-         return new Login(this, null, "Please enter " + code + " to " + normal, true);
+         address = address.replace("//login/", "/login/");
+         redirect = redirect.replace("//mail-sent", "/mail-sent");
+         
+         return new Login(this, redirect, "Please enter " + code + " to " + address, true);
       }
    },
    TOKEN {
@@ -20,9 +21,12 @@ public enum LoginType {
       public Login generateLogin(AccessRequest request, String base) {
          String token = request.getToken();
          String address = String.format("%s/login/access/grant/%s", base, token);
-         String normal = address.replace("//login/", "/login/");
+         String redirect = String.format("%s/mail-sent", base);
          
-         return new Login(this, null, "Please click " + normal, true);
+         address = address.replace("//login/", "/login/");
+         redirect = redirect.replace("//mail-sent", "/mail-sent");
+         
+         return new Login(this, redirect, "Please click " + address, true);
       }
    },
    PASSWORD {
@@ -30,10 +34,10 @@ public enum LoginType {
       public Login generateLogin(AccessRequest request, String base) {
          String token = request.getToken();
          String address = String.format("%s/login/access/grant/%s", base, token);
-         String normal = address.replace("//login/", "/login/");
-         URI redirect = URI.create(normal);
+
+         address = address.replace("//login/", "/login/");
          
-         return new Login(this, redirect, address, false);
+         return new Login(this, address, address, false);
       }
    };
   

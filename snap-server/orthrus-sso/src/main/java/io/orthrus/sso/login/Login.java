@@ -10,7 +10,11 @@ import lombok.Data;
 public class Login {
 
    private final LoginType type;
-   private final URI redirect;
+   private final String redirect;
    private final String message;
    private final boolean mail;
+
+   public URI getRedirect() {
+      return URI.create(redirect);
+   }
 }

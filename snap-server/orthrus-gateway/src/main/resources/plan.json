@@ -48,7 +48,169 @@
           "TLS_EMPTY_RENEGOTIATION_INFO_SCSV"
         ]
       },
+      "redirects": [
+        {
+          "match-pattern": "http://www.authrus.com/(.*)",
+          "ignore-pattern": "http://www.authrus.com/status",
+          "template": "https://www.authrus.com/%{1}"
+        },
+        {
+          "match-pattern": "https://www.authrus.com/",
+          "template": "https://www.authrus.com/index"
+        },
+        {
+          "match-pattern": "https://www.authrus.com/(directory|directory/)",
+          "template": "https://www.authrus.com/directory/listPeople"
+        },
+        {
+          "cookie-rule": {
+            "cookie-pattern": "([a-zA-Z0-9-_\\.=]*)",
+            "cookie-name": "SSOID",
+            "cookie-present": false,
+            "validation": {
+              "validation-headers": {
+                "X-Validation-Request": "true"
+              },
+              "validation-services": [
+                "http://prodapp1:7070/v1/access/verify/%{1}",
+                "http://prodapp2:7070/v1/access/verify/%{1}"
+              ],
+              "expiry": 20000
+            }
+          },
+          "match-pattern": "https://www.authrus.com/(directory/.*|hub/.*|admin/.*|prodapp1.*|prodapp2.*)",
+          "ignore-pattern": "https://www.authrus.com/login/.*",
+          "template": "https://www.authrus.com/login?redirect=%{1}"
+        }
+      ],
       "routes": [
+        {
+          "route-patterns": [
+            "http.*://www.authrus.com/login/.*"
+          ],
+          "route-rules": [
+            {
+              "pattern": "/login/(.*)",
+              "template": "/v1/%{1}"
+            }
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "selector": "master-slave",
+            "health-check": {
+              "ping-path": "/v1/ping",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp1:7070/",
+              "http://prodapp2:7070/"
+            ]
+          }
+        },
+        {
+          "route-patterns": [
+            "http.*://www.authrus.com/prodapp1/.*"
+          ],
+          "route-rules": [
+            {
+              "pattern": "/prodapp1/terminal",
+              "template": "/index.html"
+            },           
+            {
+              "pattern": "/prodapp1/(.*)",
+              "template": "/%{1}"
+            }
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "selector": "master-slave",
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp1:8899/"
+            ]
+          }
+        },
+        {
+          "route-patterns": [
+            "http.*://www.authrus.com/prodapp2/.*"
+          ],
+          "route-rules": [
+            {
+              "pattern": "/prodapp2/terminal",
+              "template": "/index.html"
+            },          
+            {
+              "pattern": "/prodapp2/(.*)",
+              "template": "/%{1}"
+            }
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "selector": "master-slave",
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp2:8899/"
+            ]
+          }
+        },
+        {
+          "route-patterns": [
+            "http.*://www.authrus.com/hub/.*"
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "health-check": {
+              "ping-path": "/status",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp1:3334/"
+            ]
+          }
+        },
+        {
+          "route-patterns": [
+            "http.*://www.authrus.com/directory/.*"
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "health-check": {
+              "ping-path": "/v1/ping",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp1:8383/"
+            ]
+          }
+        },
+        {
+          "route-patterns": [
+            "http.*://www.authrus.com/admin/.*"
+          ],
+          "route-rules": [
+            {
+              "pattern": "/admin/(.*)",
+              "template": "/v1/%{1}"
+            }
+          ],
+          "server-group": {
+            "buffer": 8192,
+            "health-check": {
+              "ping-path": "/v1/ping",
+              "ping-frequency": 5000
+            },
+            "servers": [
+              "http://prodapp1:7979/",
+              "http://prodapp2:7979/"
+            ]
+          }
+        },
         {
           "route-patterns": [
             "http.*://www.authrus.com/.*"
@@ -77,8 +239,8 @@
               }
             },
             "servers": [
-              "http://localhost:4321/",
-              "http://localhost:4321/"
+              "http://prodapp1:4321/",
+              "http://prodapp2:4321/"
             ]
           }
         }
