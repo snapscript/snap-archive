@@ -5,6 +5,8 @@ import io.orthrus.common.zookeeper.ZooKeeperConfiguration;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Import(ZooKeeperConfiguration.class)
 public class RegistryConfiguration {
 
+   private final ScheduledThreadPoolExecutor executor;
    private final ZooKeeperClient client;
    private final ObjectMapper mapper;
    private final String environment;
@@ -35,6 +38,7 @@ public class RegistryConfiguration {
          @Value("${server.directory}") File path,
          @Value("${server.port}") int port)
    {
+      this.executor = new ScheduledThreadPoolExecutor(1);
       this.mapper = new ObjectMapper();
       this.environment = environment;
       this.client = client;
@@ -59,7 +63,7 @@ public class RegistryConfiguration {
                  .host(host)
                  .build();
            
-           registry.addNode(name, node);
+           executor.scheduleAtFixedRate(() -> registry.addNode(name, node), 1, 10, TimeUnit.SECONDS);
            log.info("Registering service {} at {}", name, location);
         } catch(Exception e) {
            log.error("Could not register service", e);

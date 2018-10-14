@@ -59,9 +59,16 @@ public class Registry {
    public RegistryNode addNode(String name, RegistryNode node) {
       String path = String.format("/%s/%s/%s", environment, host, name);
       
-      client.deleteNode(path);
-      client.addNode(path, node);
-      
+      try {
+         client.deleteNode(path);
+      } catch(Exception ignore){ 
+      } finally {
+         try {
+            client.addNode(path, node);
+         } catch(Exception e) {
+            log.info("Could not register node {}", path, e);
+         }
+      }
       return node;
    }
    

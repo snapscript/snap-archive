@@ -46,6 +46,11 @@ public class ManagementConfiguration {
    public WebAdministrator webAdministrator(WebObjectIntrospector introspector) {
       return new WebAdministrator(configuration, introspector);
    }
+   
+   @Bean
+   public WebConfiguration webConfiguration() {
+      return configuration;
+   }
 
    @Bean
    public WebObjectIntrospector webIntrospector(ObjectIntrospector introspector) {
