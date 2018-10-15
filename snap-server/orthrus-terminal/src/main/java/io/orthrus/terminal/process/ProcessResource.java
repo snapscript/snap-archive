@@ -1,4 +1,4 @@
-package io.orthrus.terminal.system;
+package io.orthrus.terminal.process;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

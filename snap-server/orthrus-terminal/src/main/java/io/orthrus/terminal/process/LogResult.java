@@ -1,4 +1,4 @@
-package io.orthrus.terminal.system;
+package io.orthrus.terminal.process;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class ImageResult {
+public class LogResult {
 
-   private String image;
    private String name;
+   private String log;
 }

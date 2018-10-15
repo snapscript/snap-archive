@@ -1,7 +1,7 @@
-package io.orthrus.terminal.system;
+package io.orthrus.terminal.process;
 
 import io.orthrus.rest.registry.RegistryNode;
-import io.orthrus.terminal.system.Process;
+import io.orthrus.terminal.process.Process;
 
 public enum OperatingSystem {
    LINUX {

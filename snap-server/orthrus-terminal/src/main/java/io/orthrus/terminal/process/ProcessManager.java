@@ -1,4 +1,4 @@
-package io.orthrus.terminal.system;
+package io.orthrus.terminal.process;
 
 import java.io.File;
 import java.util.Map;

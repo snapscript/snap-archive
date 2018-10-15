@@ -1,4 +1,4 @@
-package io.orthrus.terminal.system;
+package io.orthrus.terminal.process;
 
 import io.orthrus.rest.registry.RegistryNode;
 import io.orthrus.rest.registry.RegistryService;

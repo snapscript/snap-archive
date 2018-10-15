@@ -1,4 +1,4 @@
-package io.orthrus.terminal.system;
+package io.orthrus.terminal.process;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
