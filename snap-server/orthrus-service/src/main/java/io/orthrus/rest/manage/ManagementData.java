@@ -1,5 +1,7 @@
 package io.orthrus.rest.manage;
 
+import io.orthrus.rest.registry.RegistryNode;
+
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ManagementData {
 
    private Map<String, String> attributes;
+   private RegistryNode node;
    private String connector; // JMX connector
    private String name;
    private String address;

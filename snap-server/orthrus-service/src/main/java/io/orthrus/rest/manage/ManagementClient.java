@@ -36,6 +36,7 @@ public class ManagementClient {
                         .bodyToMono(ManagementData.class)
                         .block();
              
+                  data.setNode(node);
                   return data;
                } catch(Exception e) {
                   log.info("Could not retrieve data", e);

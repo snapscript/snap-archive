@@ -12,14 +12,17 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Slf4j
+@Configuration
 @Import(ZooKeeperConfiguration.class)
 public class RegistryConfiguration {
 
@@ -48,23 +51,25 @@ public class RegistryConfiguration {
    }
    
    @Bean
-   public ApplicationListener<ContextRefreshedEvent> registryListener(Registry registry) {
+   public ApplicationListener<ApplicationEvent> registryListener(Registry registry) {
       return (event) -> {
         try {
-           InetAddress address = InetAddress.getLocalHost();
-           String host = address.getCanonicalHostName();
-           String directory = path.getCanonicalPath();
-           String location = String.format("http://%s:%s/", host, port);
-           RegistryNode node = RegistryNode.builder()
-                 .name(name)
-                 .address(location)
-                 .directory(directory)
-                 .environment(environment)
-                 .host(host)
-                 .build();
-           
-           executor.scheduleAtFixedRate(() -> registry.addNode(name, node), 1, 10, TimeUnit.SECONDS);
-           log.info("Registering service {} at {}", name, location);
+           if(ContextRefreshedEvent.class.isInstance(event)) {
+              InetAddress address = InetAddress.getLocalHost();
+              String host = address.getCanonicalHostName();
+              String directory = path.getCanonicalPath();
+              String location = String.format("http://%s:%s/", host, port);
+              RegistryNode node = RegistryNode.builder()
+                    .name(name)
+                    .address(location)
+                    .directory(directory)
+                    .environment(environment)
+                    .host(host)
+                    .build();
+              
+              executor.scheduleAtFixedRate(() -> registry.addNode(name, node), 1, 10, TimeUnit.SECONDS);
+              log.info("Registering service {} at {}", name, location);
+           }
         } catch(Exception e) {
            log.error("Could not register service", e);
         }

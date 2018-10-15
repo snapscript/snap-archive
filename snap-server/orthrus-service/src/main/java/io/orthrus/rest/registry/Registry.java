@@ -24,12 +24,10 @@ public class Registry {
    
    @SneakyThrows
    public List<RegistryNode> getNodes() {
-      String path = String.format("/%s", environment);
+      String path = String.format("/%s/%s", environment, host);
 
       return client.getNodes(path)
          .parallelStream()
-         .map(ZooKeeperNode::getPath)
-         .flatMap(parent -> client.getNodes(parent).stream())
          .map(node -> {
             try {
                String content = node.getContent();
@@ -46,7 +44,7 @@ public class Registry {
    @SneakyThrows
    public RegistryNode getNode(String name) {
       String path = String.format("/%s/%s/%s", environment, host, name);
-      ZooKeeperNode node = client.addEphemeralNode(path);
+      ZooKeeperNode node = client.getNode(path);
       
       if(node != null) {
          String content = node.getContent();

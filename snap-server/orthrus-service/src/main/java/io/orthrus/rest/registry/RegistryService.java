@@ -15,4 +15,8 @@ public class RegistryService {
    public List<RegistryNode> getNodes() {
       return registry.getNodes();
    }
+   
+   public RegistryNode getNode(String name) {
+      return registry.getNode(name);
+   }
 }

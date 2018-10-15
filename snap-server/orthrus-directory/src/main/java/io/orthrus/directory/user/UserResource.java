@@ -15,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-
 @Path(value = UserResource.RESOURCE_PATH)
 @Api(value = UserResource.RESOURCE_NAME, produces = MediaType.APPLICATION_JSON)
 public class UserResource {

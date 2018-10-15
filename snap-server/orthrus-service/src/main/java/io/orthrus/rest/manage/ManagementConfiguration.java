@@ -1,11 +1,12 @@
 package io.orthrus.rest.manage;
 
+import io.orthrus.rest.registry.RegistryConfiguration;
 import lombok.SneakyThrows;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jmx.support.ConnectorServerFactoryBean;
 
 import com.zuooh.common.manage.ObjectIntrospector;
@@ -18,6 +19,7 @@ import com.zuooh.common.manage.spring.ApplicationContextIntrospector;
 import com.zuooh.common.manage.spring.ApplicationInfo;
 
 @Configuration
+@Import(RegistryConfiguration.class)
 public class ManagementConfiguration {
    
    private final ConnectorServerFactoryBean factory;

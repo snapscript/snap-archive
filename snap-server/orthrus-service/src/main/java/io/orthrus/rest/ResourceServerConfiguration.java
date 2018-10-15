@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,14 +46,17 @@ public class ResourceServerConfiguration {
    }
    
    @Bean
-   public ApplicationListener<ContextRefreshedEvent> applicationListener() {
-      return (event) -> {
+   public ApplicationListener<ApplicationEvent> applicationListener() {
+      return (argument) -> {
         try {
-           ApplicationContext context = event.getApplicationContext();
-           ContainerManager endPoint = server.start(context);
-           int port = endPoint.getPort();
-           
-           log.info("Listening on {}", port);
+           if(ContextRefreshedEvent.class.isInstance(argument)) {
+              ContextRefreshedEvent event = (ContextRefreshedEvent)argument;
+              ApplicationContext context = event.getApplicationContext();
+              ContainerManager endPoint = server.start(context);
+              int port = endPoint.getPort();
+              
+              log.info("Listening on {}", port);
+           }
         } catch(Exception e) {
            log.error("Could not launch server", e);
         }
