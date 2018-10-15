@@ -1,5 +1,7 @@
 package io.orthrus.terminal.system;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HostActivity {
+public class DiskResult {
 
-   private double usage;
-   private int cores;
+   private List<DiskPartition> partitions;
 }

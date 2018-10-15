@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiOperation;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -27,20 +26,20 @@ public class SystemResource {
    }
    
    @GET
-   @Path("/{host}/disk")
+   @Path("/disk")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Get host disk")
-   public Response getDisk(@PathParam("host") String host) {
-      Disk disk = service.getDisk();
+   public Response getDisk() {
+      DiskResult disk = service.getDisk();
       return Response.ok(disk).build();
    }
    
    @GET
-   @Path("/{host}/activity")
+   @Path("/activity")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Get host activity")
-   public Response getActivity(@PathParam("host") String host) {
-      HostActivity activity = service.getActivity();
+   public Response getActivity() {
+      ActivityResult activity = service.getActivity();
       return Response.ok(activity).build();
    }
 }

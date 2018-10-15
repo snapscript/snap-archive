@@ -29,10 +29,10 @@ public class ProcessResource {
    }
    
    @POST
-   @Path("/{host}/{name}/start")
+   @Path("/{name}/start")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Start a process")
-   public Response start(@PathParam("host") String host, @PathParam("name") String name) {
+   public Response start(@PathParam("name") String name) {
       ProcessManager manager = locator.locate(name);
    
       if(manager != null) {
@@ -43,10 +43,10 @@ public class ProcessResource {
    }
    
    @POST
-   @Path("/{host}/{name}/stop")
+   @Path("/{name}/stop")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Stop a process")
-   public Response stop(@PathParam("host") String host, @PathParam("name") String name) {
+   public Response stop(@PathParam("name") String name) {
       ProcessManager manager = locator.locate(name);
    
       if(manager != null) {
@@ -57,10 +57,10 @@ public class ProcessResource {
    }
    
    @GET
-   @Path("/{host}/{name}/tail")
+   @Path("/{name}/tail")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Tail a process")
-   public Response tail(@PathParam("host") String host, @PathParam("name") String name) {
+   public Response tail(@PathParam("name") String name) {
       ProcessManager manager = locator.locate(name);
    
       if(manager != null) {
@@ -71,10 +71,10 @@ public class ProcessResource {
    }
    
    @GET
-   @Path("/{host}/{name}/image")
+   @Path("/{name}/image")
    @Produces(MediaType.APPLICATION_JSON)
    @ApiOperation(value = "Get process image")
-   public Response image(@PathParam("host") String host, @PathParam("name") String name) {
+   public Response image(@PathParam("name") String name) {
       ProcessManager manager = locator.locate(name);
    
       if(manager != null) {

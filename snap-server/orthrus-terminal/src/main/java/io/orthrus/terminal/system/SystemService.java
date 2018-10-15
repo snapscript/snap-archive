@@ -28,15 +28,15 @@ public class SystemService {
    }
    
    @SneakyThrows
-   public HostActivity getActivity()  {
+   public ActivityResult getActivity()  {
       double usage = os.getSystemLoadAverage();
       int cores = os.getAvailableProcessors();
       
-      return new HostActivity(usage, cores);
+      return new ActivityResult(usage, cores);
    }   
 
    @SneakyThrows
-   public Disk getDisk() {
+   public DiskResult getDisk() {
       Iterable<FileStore> stores = fs.getFileStores();
       Iterator<FileStore> iterator = stores.iterator();
       
@@ -60,9 +60,9 @@ public class SystemService {
                }
             }
          }
-         return new Disk(partitions);
+         return new DiskResult(partitions);
       }
-      return new Disk(Collections.EMPTY_LIST);
+      return new DiskResult(Collections.EMPTY_LIST);
    }
 
 }
