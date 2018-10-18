@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.PropertyResolver;
 
 import com.zuooh.http.proxy.plan.ProxyPlan;
-import com.zuooh.http.proxy.plan.ProxyPlanParser;
+import com.zuooh.http.proxy.plan.legacy.ProxyPlanParser;
 
 @Configuration
 @ComponentScan(basePackageClasses = ProxyPlanConfiguration.class)

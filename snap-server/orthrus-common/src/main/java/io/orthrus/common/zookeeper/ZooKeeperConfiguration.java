@@ -22,13 +22,16 @@ public class ZooKeeperConfiguration {
    private final ObjectMapper mapper;
    private final RetryPolicy policy;
    private final String hosts;
+   private final boolean enabled;
    
    public ZooKeeperConfiguration(
          @Value("${zookeeper.hosts}") String hosts,
-         @Value("${zookeeper.retries:100}") int retries) 
+         @Value("${zookeeper.retries:100}") int retries,
+         @Value("${zookeeper.enabled:true}") boolean enabled) 
    {
       this.policy = new RetryNTimes(retries, 5000);
       this.mapper = new ObjectMapper();
+      this.enabled = enabled;
       this.hosts = hosts;
    }
    
@@ -37,9 +40,10 @@ public class ZooKeeperConfiguration {
    public ZooKeeperClient zooKeeperClient() {
       CuratorFramework framework = CuratorFrameworkFactory.newClient(hosts, policy);
       
-      log.info("Connecting to {}", hosts);
-      framework.start();
-      
+      if(enabled) {
+         log.info("Connecting to {}", hosts);
+         framework.start();
+      }
       return new ZooKeeperClient(framework, mapper);
    }
 }

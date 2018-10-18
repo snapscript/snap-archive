@@ -16,6 +16,7 @@ jmx:
    port: 9989
    
 zookeeper:   
+   enabled: false
    hosts: localhost:2181     
 
 logging:
