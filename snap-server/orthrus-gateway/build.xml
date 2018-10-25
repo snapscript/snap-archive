@@ -5,7 +5,7 @@
   <echo message="${maven.home}" />
   <echo message="${java.home}" />
   <echo message="${ant.home}" />
-  <exec executable="${maven.home}\bin\mvn.bat">
+  <exec executable="${maven.home}\bin\mvn.cmd">
     <arg value="clean" />
     <arg value="install" />
     <arg value="-DskipTests" />
